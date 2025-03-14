@@ -4,20 +4,21 @@ def shopping_item(shopping_list, new_item_list):
    item_list = ""
    item_list = new_item_list
    shopping_list.append(item_list)
-   print(f"The item: {item_list} has been added to the list successefully")
+   print(f"\nThe item: {item_list} has been added to the list successefully")
    return
 
 def show_list(shopping_list):
-   print("SHOPPING LIST: ")
-for indice, item_list in enumerate (item_list, start = 1):
-   print(f"{indice}. {item_list}")
+   print("\nSHOPPING LIST: \n")
+   for indice, item_list in enumerate (shopping_list, start= 1):
+      print(f"{indice}. {item_list}")
 
 shopping_list = []
 
 while True:
-   print("Shopping list")
+   print("\nShopping list")
    print("\n1. Add items")
-   print("2. EXIT")
+   print("2. Show shopping list")
+   print("3. EXIT")
 
    choice = input("\nEnter your choice: ").strip()   
 
@@ -26,10 +27,10 @@ while True:
       
       shopping_item(shopping_list, new_item_list)
 
-   elif choice == "3":
+   elif choice == "2":
       show_list(shopping_list)
 
-   elif choice == "2":
+   elif choice == "3":
       print("\nYou have choosen to EXIT.")
       break
 print(f"\nThese are the items on your SHOPPING LIST: \n{shopping_list}") # não está adicionando nada
