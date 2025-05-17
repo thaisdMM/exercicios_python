@@ -14,6 +14,7 @@ lista_disciplinas = [
     {"nome": "Historia", "codigo": 102},
     {"nome": "Ciencias", "codigo": 103},
 ]
+lista_notas = []
 linha = "=-" * 50
 while True:
     aluno = {}
@@ -116,5 +117,29 @@ for materia in lista_disciplinas:
     for key, value in materia.items():
         print(f"{key}: {value:<20} ", end="")
     print()
+print(linha)
+for valor in lista_alunos:
+    aluno = {}
+    #print(f"Valor em lista de alunos {valor}")
+    aluno = valor
+    #print(f"dicionario {aluno}")
+    aluno["disciplina"] = lista_disciplinas[:]
+    #print(f"dicionario {aluno}")
+    
+for alunos in lista_alunos:
+    for key, value in alunos.items():
+        print(f"{key}: {str(value):<10} ", end="")
+    print()
+    print("-" * 70)
+
+#print(lista_alunos)
+
+# for valor in lista_alunos:
+#     print(f"Valor em lista de alunos {valor}")
+#     for key, value in valor.items():
+#         key["disciplina"] = lista_disciplinas[:]
+#         print(f"novo Valor em lista de alunos {valor}")
+
+# print(lista_alunos)
 
 print("\nPROGRAMA FINALIZADO!")
