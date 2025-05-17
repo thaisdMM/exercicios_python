@@ -14,8 +14,10 @@ lista_disciplinas = [
     {"nome": "Historia", "codigo": 102},
     {"nome": "Ciencias", "codigo": 103},
 ]
+
 lista_notas = []
 linha = "=-" * 50
+linha2 = "-" * 70
 while True:
     aluno = {}
     aluno["nome"] = input("Nome do aluno: ").strip().title()
@@ -118,21 +120,35 @@ for materia in lista_disciplinas:
         print(f"{key}: {value:<20} ", end="")
     print()
 print(linha)
-for valor in lista_alunos:
-    aluno = {}
-    #print(f"Valor em lista de alunos {valor}")
-    aluno = valor
-    #print(f"dicionario {aluno}")
-    aluno["disciplina"] = lista_disciplinas[:]
-    #print(f"dicionario {aluno}")
-    
-for alunos in lista_alunos:
-    for key, value in alunos.items():
-        print(f"{key}: {str(value):<10} ", end="")
-    print()
-    print("-" * 70)
+for aluno in lista_alunos:
+    disciplina_alunos = []
+    for disciplina in lista_disciplinas:
+        disciplina_alunos.append(
+            {"nome": disciplina["nome"], "codigo": disciplina["codigo"], "notas": []}
+        )
+    aluno["disciplina"] = disciplina_alunos[:]
+    # print(f"dicionario {aluno}")
+# lista_alunos.append(aluno.copy())
+for aluno in lista_alunos:
+    for key, value in aluno.items():
+        print(f"{key}: {str(value):<10} ")
+    # print()
+    print(linha2)
 
-#print(lista_alunos)
+
+for aluno in lista_alunos:
+    print(f"Aluno(a): {aluno['nome']}")
+    for materia in aluno["disciplina"]:
+        nota1 = float(input(f"Digite a 1ª nota tirada em {materia['nome']} "))
+        nota2 = float(input(f"Digite a 2ª nota tirada em {materia['nome']} "))
+        materia["notas"] = nota1, nota2
+        print(f"Materia: {materia}")
+    print(linha2)
+print(linha)
+for aluno in lista_alunos:
+    for key, value in aluno.items():
+        print(f"{key}: {str(value):<10}")
+    print()
 
 # for valor in lista_alunos:
 #     print(f"Valor em lista de alunos {valor}")
