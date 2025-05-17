@@ -9,51 +9,26 @@
 
 aluno = {}
 lista_alunos = []
+disciplina = {}
+lista_disciplinas = [
+    {"nome": "MATEMÁTICA", "codigo": 101},
+    {"nome": "HISTÓRIA", "código": 102},
+    {"nome": "CIÊNCIAS", "codigo": 103}
+]
+
+
 linha = "=-" * 50
 while True:
     aluno["nome"] = input("Nome do aluno: ").strip().title()
+    matricula = int(input(f"Matrícula do aluno {aluno['nome']}: "))
     while True:
-        matricula = int(input(f"Matrícula do aluno {aluno['nome']}: "))
-        for aluno_existente in lista_alunos:
-            if aluno_existente["matricula"] == matricula:
-                print(
-                    "Matrícula já cadastrada em outro aluno. Por favor, digite outra matrícula."
-                )
-                matricula = int(input(f"Matrícula do aluno {aluno['nome']}: "))
-        aluno["matricula"] = matricula
-        print(
-            f"Aluno {aluno['nome']} cadastrado com sucesso com a matricula {aluno['matricula']}"
-        )
-        break
-
-    # while True:
-    #     matricula = int(input(f"Matrícula do aluno {aluno['nome']}: "))
-    #     if any(aluno_existente["matricula"] == matricula: for aluno_existente in lista_alunos):
-    #             print("Matrícula já cadastrada em outro aluno. Por favor, digite outra matrícula.")
-    #     else:
-    #         #aluno["matricula"] = matricula
-    #         break
-    # aluno["Matricula"] = int(input(f"Matricula do aluno {aluno['nome']} "))
-    # if len(lista_alunos) == 0:
-    #     matricula = int(input(f"Matrícula do aluno {aluno['nome']}: "))
-    #     aluno["matricula"] = matricula
-    #     print(aluno["matricula"])
-
-    # if len(lista_alunos) != 0:
-    #     matricula = int(input(f"Matrícula do aluno {aluno['nome']}: "))
-    #     for valor in lista_alunos:
-    #         print(f"valor {valor}")
-    #         while True:
-    #             if matricula != valor["matricula"]:
-    #                 aluno["matricula"] = matricula
-    #                 print(
-    #                     f"Aluno {aluno['nome']} cadastrado com sucesso com a matricula {aluno['matricula']}"
-    #                 )
-    #                 break
-    #             print(
-    #                 f"Matrícula já cadastrada em outro aluno. Por favor, digite uma matricula diferente."
-    #             )
-    #             matricula = int(input(f"Matrícula do aluno {aluno['nome']}: "))
+        if any(matricula_existente['matricula'] == matricula for matricula_existente in lista_alunos):
+            print(f"Matrícula já cadastrada. Por favor, digite outra matrícula.")
+            matricula = int(input(f"Matrícula do aluno {aluno['nome']}: "))
+        else:
+            break
+    aluno["matricula"] = matricula
+    print(f"{aluno['nome']} cadastrado com sucesso com a matrícula {aluno['matricula']}")
     lista_alunos.append(aluno.copy())
     print(f"Lista de alunos cadastrados: {lista_alunos}")
     while True:
@@ -73,6 +48,35 @@ for posicao, valor in enumerate(lista_alunos):
         print(f"{key} = {value:<40} ", end="")
     print()
 print(linha)
+print(f"As diciplinas já cadastradas são: ")
+#while True:
+for materia in lista_disciplinas:
+    for key, value in materia.items():
+        print(f"{key}: {value:<20} ", end="")
+    print()
+while True:
+    print(f"dicionario de disciplina: {disciplina}")
+    print(f"lista de disciplina: {lista_disciplinas}")
+    cadastro_disciplina = input("Quer cadastrar alguma disciplina nova? [S/N] ").strip().upper()[0]
+    if cadastro_disciplina == "N":
+        print("Escolheu não cadastrar novas disciplinas.")
+        break
+    if cadastro_disciplina == "S":
+        disciplina["nome"] = input("Qual o nome da nova disciplina que deseja cadastrar? ").strip().upper()
+        disciplina["codigo"] = int(input(f"qual o código da {disciplina['nome']} "))
+        print(f"dicionario de disciplina: {disciplina}")
+        lista_disciplinas.append(disciplina.copy())
+        disciplina.clear()
+        print(f"dicionario de disciplina: {disciplina}")
 
+    else:
+        print("Resposta inválida. Digite S para sim ou N para não.")
+    #break
+print(linha)
+print(f"As diciplinas já cadastradas são: ")
+for materia in lista_disciplinas:
+    for key, value in materia.items():
+        print(f"{key}: {value:<20} ", end="")
+    print()
 
 print("\nPROGRAMA FINALIZADO!")
