@@ -16,6 +16,7 @@ lista_disciplinas = [
 ]
 
 lista_notas = []
+
 linha = "=-" * 50
 linha2 = "-" * 70
 while True:
@@ -124,16 +125,20 @@ for aluno in lista_alunos:
     disciplina_alunos = []
     for disciplina in lista_disciplinas:
         disciplina_alunos.append(
-            {"nome": disciplina["nome"], "codigo": disciplina["codigo"], "notas": []}
+            {
+                "nome": disciplina["nome"],
+                "codigo": disciplina["codigo"],
+                "notas": [],
+            }
         )
     aluno["disciplina"] = disciplina_alunos[:]
     # print(f"dicionario {aluno}")
 # lista_alunos.append(aluno.copy())
-for aluno in lista_alunos:
-    for key, value in aluno.items():
-        print(f"{key}: {str(value):<10} ")
-    # print()
-    print(linha2)
+# for aluno in lista_alunos:
+#     for key, value in aluno.items():
+#         print(f"{key}: {str(value):<10} ")
+#     # print()
+#     print(linha2)
 
 
 for aluno in lista_alunos:
@@ -141,21 +146,50 @@ for aluno in lista_alunos:
     for materia in aluno["disciplina"]:
         nota1 = float(input(f"Digite a 1ª nota tirada em {materia['nome']} "))
         nota2 = float(input(f"Digite a 2ª nota tirada em {materia['nome']} "))
-        materia["notas"] = nota1, nota2
+        materia["notas"] = [nota1, nota2]
+        materia["media"] = (nota1 + nota2) / 2
+        if materia["media"] >= 7:
+            materia["situacao"] = "Aprovado"
+        elif materia["media"] > 5:
+            materia["situacao"] = "Recuperação"
+        else:
+            materia["situacao"] = "Reprovado"
+
         print(f"Materia: {materia}")
     print(linha2)
 print(linha)
+print("O relatório geral de todos os alunos cadastrados é o seguinte:")
+print(linha)
 for aluno in lista_alunos:
-    for key, value in aluno.items():
-        print(f"{key}: {str(value):<10}")
-    print()
+    print(f"{aluno['nome']:^60}")
+    print(f"Matrícula do aluno: {aluno['matricula']}")
+    print("As diciplinas cursadas são: ")
+    for materia in aluno["disciplina"]:
+        print(f"{materia}")
+    print(linha2)
+print(linha)
 
-# for valor in lista_alunos:
-#     print(f"Valor em lista de alunos {valor}")
-#     for key, value in valor.items():
-#         key["disciplina"] = lista_disciplinas[:]
-#         print(f"novo Valor em lista de alunos {valor}")
+while True:
+    busca = int(
+        input(
+            "Digite a matrícula do aluno que deseja saber os dados? [Digite 999 se quiser parar o programa] "
+        )
+    )
+    if busca == 999:
+        print("Finalizando programa.")
+        break
+    aluno_existe = False
 
-# print(lista_alunos)
-
+    for aluno in lista_alunos:
+        if busca == aluno["matricula"]:
+            aluno_existe = True
+            print(f"{aluno['nome']:^60}")
+            print(f"Matrícula do aluno: {aluno['matricula']}")
+            print("As diciplinas cursadas são: ")
+            for materia in aluno["disciplina"]:
+                print(f"{materia}")
+            print(linha)
+            break
+    if not aluno_existe:
+        print("Número de matrícula inexistente. Tente novamente.")
 print("\nPROGRAMA FINALIZADO!")
