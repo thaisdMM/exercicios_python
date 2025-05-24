@@ -1,9 +1,21 @@
 def cadastro_alunos(aluno, matricula):
     aluno = {"nome": aluno, "matricula": matricula}
     lista_alunos.append(aluno.copy())
-    print(f"{aluno['nome']}: {aluno['matricula']} foi cadastrado com sucesso!")
+    print(f"{aluno['nome']}: foi cadastrado(a) com sucesso com a matrícula {aluno['matricula']}!")
     print("=-" * 50)
+    
     return
+
+
+def continuar():
+    while True:
+        continuar = (
+            input("Deseja continuar a cadastrar alunos? [S/N] ").strip().upper()[0]
+        )
+        if continuar not in "NS":
+            print("Resposta inválida. Responda S para continuar ou N para parar.")
+        if continuar == "N":
+            break
 
 
 # lista_alunos = []
@@ -208,33 +220,34 @@ while True:
         print(linha1)
 
     if resposta == 1:
+        print("1- Cadastrar alunos.")
         while True:
             aluno = input("Nome do aluno: ").strip().title()
-            while True:
-                matricula = int(input(f"Matrícula do aluno {aluno}: "))
-                # fazer uma validação se não for número.
-                if any(
-                    matricula_existente["matricula"] == matricula
-                    for matricula_existente in lista_alunos
-                ):
-                    print(
-                        f"Matrícula {matricula} já cadastrada em outro aluno. Por favor, digite outro número de matrícula."
-                    )
-                else:
-                    break
-            
-            continuar = input("Deseja continuar a cadastrar alunos? [S/N] ").strip().upper()[0]
-            if continuar not in "NS":
-                print("Resposta inválida. Responda S para continuar ou N para parar.")
-            if continuar == "N":
+            if not aluno.isnumeric():
                 break
+            print("Nome inválido!")
 
-
+        while True:
+            matricula = int(input(f"Matrícula do aluno {aluno}: "))
+            # fazer uma validação se não for número.
+            if any(
+                matricula_existente["matricula"] == matricula
+                for matricula_existente in lista_alunos
+            ):
+                print(
+                    f"Matrícula {matricula} já cadastrada em outro aluno. Por favor, digite outro número de matrícula."
+                )
+                print(linha1)
+            else:
+                break
+        print(linha1)
         cadastro_alunos(aluno, matricula)
 
     if resposta == 8:
         print("Volte sempre.")
         print(linha1)
         break
+
+
 print(lista_alunos)
 print("\nPrograma finalizado!")
