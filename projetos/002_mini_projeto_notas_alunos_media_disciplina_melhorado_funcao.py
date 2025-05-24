@@ -1,3 +1,10 @@
+def titulo(msg):
+    tamanho = len(msg) +4
+    print("*" * tamanho)
+    print(f"  {msg}")
+    print("*" * tamanho)
+    return
+
 def cadastro_alunos(aluno, matricula):
     aluno = {"nome": aluno, "matricula": matricula}
     lista_alunos.append(aluno.copy())
@@ -6,6 +13,16 @@ def cadastro_alunos(aluno, matricula):
     
     return
 
+def mostrar_alunos(lista):
+    return
+
+def cadastro_disciplinas(materia, codigo):
+    disciplina = {"nome": materia, "codigo": codigo}
+    lista_disciplinas.append(disciplina.copy())
+    print(f"Disciplina: {disciplina['nome']} cadastrada com sucesso com o código {disciplina['codigo']}")
+    disciplina.clear()
+    print("=-" * 50)
+    return
 
 def continuar():
     while True:
@@ -188,6 +205,7 @@ def continuar():
 
 # PROGRAMA PRINCIPAL:
 lista_alunos = []
+lista_disciplinas = []
 linha1 = "-" * 70
 
 while True:
@@ -196,13 +214,15 @@ while True:
     MENU PROGRAMA DE ALUNOS E DISCIPLINAS
 
     1- Cadastrar alunos.
-    2- Cadastrar disciplinas.
-    3- Cadastrar notas por disciplina.
-    4- Exibir situação de todos os alunos.
-    5- Exibir a situação de um aluno específico.
-    6- Excluir aluno.
-    7- Trocar notas do aluno.
-    8- Fim do programa.
+    2- Exibir alunos cadastrados.
+    3- Cadastrar disciplinas.
+    4- Exibir disciplinas cadastradas.
+    5- Cadastrar notas por disciplina.
+    6- Exibir situação de todos os alunos.
+    7- Exibir a situação de um aluno específico.
+    8- Excluir aluno.
+    9- Trocar notas do aluno.
+    10- Fim do programa.
     """
     )
     while True:
@@ -213,20 +233,15 @@ while True:
             print("Resposta inválida! Digite de acordo com o menu.")
         else:
             resposta = int(resposta)
-            if 0 < resposta <= 8:
+            if 0 < resposta <= 10:
                 break
             else:
                 print("Resposta inválida! Digite de acordo com o menu.")
         print(linha1)
 
     if resposta == 1:
-        print("1- Cadastrar alunos.")
-        while True:
-            aluno = input("Nome do aluno: ").strip().title()
-            if not aluno.isnumeric():
-                break
-            print("Nome inválido!")
-
+        titulo("1- Cadastrar alunos.")
+        aluno = input("Nome do aluno: ").strip().title()   
         while True:
             matricula = int(input(f"Matrícula do aluno {aluno}: "))
             # fazer uma validação se não for número.
@@ -242,12 +257,27 @@ while True:
                 break
         print(linha1)
         cadastro_alunos(aluno, matricula)
+    
+    if resposta == 2:
+        titulo("2- Exibir alunos cadastrados:")
+        for aluno in lista_alunos:
+            for key, value in aluno.items():
+                print(f"{key} = {value:<20}", end="")
+            print()
+        mostrar_alunos(lista_alunos)
 
-    if resposta == 8:
+    if resposta == 3:
+        titulo("2- Cadastrar disciplinas.")
+        materia = input("Nome da disciplina: ")
+        codigo = int(input(f"Código da disciplina {materia}: "))
+
+        cadastro_disciplinas(materia, codigo)
+    if resposta == 10:
         print("Volte sempre.")
         print(linha1)
         break
 
 
 print(lista_alunos)
+print(lista_disciplinas)
 print("\nPrograma finalizado!")
