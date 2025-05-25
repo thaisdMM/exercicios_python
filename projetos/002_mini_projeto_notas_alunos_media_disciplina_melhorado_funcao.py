@@ -17,9 +17,11 @@ def cadastro_alunos(lista_alunos, nome_aluno, matricula_aluno):
 
 
 def mostrar_alunos(lista_alunos):
+    print("LISTA DE ALUNOS:")
+    print()
     for aluno in lista_alunos:
         for key, value in aluno.items():
-            print(f"{key} = {value:<20}", end="")
+            print(f"{key:<5} = {value}", end="  ")
         print()
     print("=-" * 50)
 
@@ -36,18 +38,19 @@ def cadastro_disciplinas(lista_disciplinas, nome_disciplina, codigo_disciplina):
 
 
 def mostrar_disciplinas(lista_disciplinas):
-    print("Lista de disciplinas:")
+    print("LISTA DE DISCIPLINAS:")
     print()
     for disciplina in lista_disciplinas:
         for key, value in disciplina.items():
-            print(f"{key} = {value:<20}", end="")
+            print(f"{key:<5} = {value}", end="  ")
         print()
     print("=-" * 50)
 
 
-def cadastro_notas(lista_disciplinas, nota1, nota2):
+def cadastro_notas(lista_alunos, nota1, nota2):
+    
     lista_notas = [nota1, nota2]
-    lista_disciplinas.append(lista_notas[:])
+    lista_alunos.append(lista_notas[:])
     print(lista_disciplinas)
     lista_notas.clear()
     
@@ -159,11 +162,10 @@ while True:
 
     if resposta == 5:
         titulo("5- Cadastrar notas por disciplina:")
+        mostrar_alunos(lista_alunos)
         mostrar_disciplinas(lista_disciplinas)
-        if len(lista_disciplinas) <= 0:
-            print("Ainda não existem disciplinas cadastradas. Primeiro cadastre alguma disciplina.")
-        if len(lista_alunos) <= 0:
-            print("Ainda não existem alunos cadastradas. Primeiro cadastre algum aluno.")
+        if len(lista_disciplinas) <= 0 or len(lista_alunos) <= 0:
+            print("Ainda não existem disciplinas e/ou alunos cadastradas. Primeiro cadastre disciplina e/ou aluno.")
         else:
             for aluno in lista_alunos:
                 disciplina_aluno = []
@@ -173,7 +175,9 @@ while True:
                         "codigo": disciplina['codigo'],
                         "notas": []
                     })
-            aluno["disciplina"] = disciplina_aluno[:]
+            for aluno in lista_alunos:
+                aluno["disciplina"] = disciplina_aluno[:]
+                print(aluno)
             materia = int(input("Digite o código da disciplina que deseja cadastrar as notas: "))
             for aluno in lista_alunos:
                 for disciplina in aluno['disciplina']:
@@ -181,7 +185,7 @@ while True:
                         nota1 = float(input("1ª nota: "))
                         nota2 = float(input("2ª nota: "))
 
-            cadastro_notas(lista_disciplinas, nota1, nota2)
+                    cadastro_notas(lista_disciplinas, nota1, nota2)
 
     if resposta == 10:
         print("Volte sempre.")
