@@ -6,11 +6,11 @@ def titulo(msg):
     return
 
 
-def cadastro_alunos(aluno, matricula):
-    aluno = {"nome": aluno, "matricula": matricula}
+def cadastro_alunos(lista_alunos, nome_aluno, matricula_aluno):
+    aluno = {"nome": nome_aluno, "matricula": matricula_aluno}
     lista_alunos.append(aluno.copy())
     print(
-        f"{aluno['nome']}: foi cadastrado(a) com sucesso com a matrícula {aluno['matricula']}!"
+        f"{nome_aluno}: foi cadastrado(a) com sucesso com a matrícula {matricula_aluno}!"
     )
     print("=-" * 50)
 
@@ -21,12 +21,6 @@ def mostrar_alunos(lista):
     print("=-" * 50)
     return
 
-
-def mostrar_disciplinas(lista):
-    print("=-" * 50)
-    return
-
-
 def cadastro_disciplinas(materia, codigo):
     disciplina = {"nome": materia, "codigo": codigo}
     lista_disciplinas.append(disciplina.copy())
@@ -36,6 +30,20 @@ def cadastro_disciplinas(materia, codigo):
     disciplina.clear()
     print("=-" * 50)
     return
+
+def mostrar_disciplinas(lista):
+    print("Lista de matérias:")
+    for materia in lista_disciplinas:
+            materia['nome'] = materia
+            materia['codigo'] = codigo
+            print(f"MATÉRIA: {materia['nome']} = CÓDIGO: {materia['codigo']:<20}",end="")
+            # for key, value in materia.items():
+            #     print(f"{key} = {value:<20}", end="")
+    
+    print("=-" * 50)
+    return
+
+
 
 
 def continuar():
@@ -87,22 +95,22 @@ while True:
 
     if resposta == 1:
         titulo("1- Cadastrar alunos.")
-        aluno = input("Nome do aluno: ").strip().title()
+        nome_aluno = input("Nome do aluno: ").strip().title()
         while True:
-            matricula = int(input(f"Matrícula do aluno {aluno}: "))
+            matricula_aluno = int(input(f"Matrícula do aluno {nome_aluno}: "))
             # fazer uma validação se não for número.
             if any(
-                matricula_existente["matricula"] == matricula
+                matricula_existente["matricula"] == matricula_aluno
                 for matricula_existente in lista_alunos
             ):
                 print(
-                    f"Matrícula {matricula} já cadastrada em outro aluno. Por favor, digite outro número de matrícula."
+                    f"Matrícula {matricula_aluno} já cadastrada em outro aluno. Por favor, digite outro número de matrícula."
                 )
                 print(linha1)
             else:
                 break
         print(linha1)
-        cadastro_alunos(aluno, matricula)
+        cadastro_alunos(lista_alunos, nome_aluno, matricula_aluno)
 
     if resposta == 2:
         titulo("2- Exibir alunos cadastrados:")
@@ -129,7 +137,8 @@ while True:
         while True:
             # quero limitar o codigo a apenas 3 digitos
             # quero importar depois a função leiaInt() que eu fiz, para aceitar só valores numéricos
-            codigo = int(input(f"Código da disciplina {materia}: "))
+            codigo = input(f"Código da disciplina {materia}: ")
+            #int(input(f"Código da disciplina {materia}: ")) # não dá para converter para int pq dá erro no mostrar lista que é string
             if any(
                 codigo_existente["codigo"] == codigo
                 for codigo_existente in lista_disciplinas
@@ -140,13 +149,14 @@ while True:
                 print(linha1)
             else:
                 break
+        cadastro_disciplinas(materia, codigo)
     if resposta == 4:
         titulo("4- Exibir disciplinas cadastradas")
-        for materia in lista_disciplinas:
-            for key, value in materia.items():
-                print(f"{key} = {value:<20}", end="")
+        # for materia in lista_disciplinas:
+        #     for key, value in materia.items():
+        #         print(f"{key} = {value:<20}", end="")
+        mostrar_disciplinas(lista_alunos)
 
-        cadastro_disciplinas(materia, codigo)
     if resposta == 10:
         print("Volte sempre.")
         print(linha1)
