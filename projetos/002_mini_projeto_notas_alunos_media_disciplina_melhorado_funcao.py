@@ -22,7 +22,6 @@ def mostrar_alunos(lista_alunos):
             print(f"{key} = {value:<20}", end="")
         print()
     print("=-" * 50)
-    return
 
 
 def cadastro_disciplinas(lista_disciplinas, nome_disciplina, codigo_disciplina):
@@ -46,16 +45,24 @@ def mostrar_disciplinas(lista_disciplinas):
     print("=-" * 50)
 
 
+def cadastro_notas(lista_disciplinas, nota1, nota2):
+    lista_notas = [nota1, nota2]
+    lista_disciplinas.append(lista_notas[:])
+    print(lista_disciplinas)
+    lista_notas.clear()
+    
+    return
+
 def continuar():
     while True:
         continuar = (
-            input("Deseja continuar a cadastrar alunos? [S/N] ").strip().upper()[0]
+            input("Deseja continuar? [S/N] ").strip().upper()[0]
         )
         if continuar not in "NS":
             print("Resposta inválida. Responda S para continuar ou N para parar.")
         if continuar == "N":
             break
-
+    return
 
 # PROGRAMA PRINCIPAL:
 lista_alunos = []
@@ -147,8 +154,23 @@ while True:
         cadastro_disciplinas(lista_disciplinas, nome_disciplina, codigo_disciplina)
 
     if resposta == 4:
-        titulo("4- Exibir disciplinas cadastradas")
+        titulo("4- Exibir disciplinas cadastradas:")
         mostrar_disciplinas(lista_disciplinas)
+
+    if resposta == 5:
+        titulo("5- Cadastrar notas por disciplina:")
+        mostrar_disciplinas(lista_disciplinas)
+        if len(lista_disciplinas) <= 0:
+            print("Ainda não existem disciplinas cadastradas. Primeiro cadastre alguma disciplina.")
+        else:
+            materia = int(input("Digite o código da disciplina que deseja cadastrar as notas: "))
+            for disciplina in lista_disciplinas:
+                if disciplina['codigo'] == materia:
+                
+                    nota1 = float(input("1ª nota: "))
+                    nota2 = float(input("2ª nota: "))
+
+            cadastro_notas(lista_disciplinas, nota1, nota2)
 
     if resposta == 10:
         print("Volte sempre.")
