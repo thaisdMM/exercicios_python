@@ -13,6 +13,7 @@ def cadastro_alunos(lista_alunos, nome_aluno, matricula_aluno):
         f"{nome_aluno}: foi cadastrado(a) com sucesso com a matrícula {matricula_aluno}!"
     )
     print("=-" * 50)
+    associacao_disciplinas_alunos(lista_alunos, lista_disciplinas)
     return
 
 
@@ -29,6 +30,7 @@ def mostrar_alunos(lista_alunos):
 def cadastro_disciplinas(lista_disciplinas, nome_disciplina, codigo_disciplina):
     disciplina = {"nome": nome_disciplina, "codigo": codigo_disciplina}
     lista_disciplinas.append(disciplina.copy())
+    associacao_disciplinas_alunos(lista_alunos, lista_disciplinas)
     print(
         f"Disciplina: {nome_disciplina} cadastrada com sucesso com o código {codigo_disciplina}"
     )
@@ -47,25 +49,48 @@ def mostrar_disciplinas(lista_disciplinas):
     print("=-" * 50)
 
 
-def cadastro_notas(lista_alunos, nota1, nota2):
-    
-    lista_notas = [nota1, nota2]
-    lista_alunos.append(lista_notas[:])
-    print(lista_disciplinas)
-    lista_notas.clear()
-    
+def associacao_disciplinas_alunos(lista_alunos, lista_disciplinas):
+    for aluno in lista_alunos:
+        if not aluno["disciplina"]:
+            aluno["disciplina"] = []
+        for disciplina in lista_disciplinas:
+            if any(
+                codigo_existente["codigo"] == disciplina["codigo"]
+                for codigo_existente in aluno["disciplina"]
+            ):
+                continue
+            else:
+                aluno["disciplina"].append(
+                    {
+                        "nome": disciplina["nome"],
+                        "codigo": disciplina["codigo"],
+                        "notas": [],
+                    }
+                )
+
+
+def cadastro_notas(lista_alunos, codigo_disciplina):
+
+    for notas in aluno["disciplina"]:
+        notas["notas"] = [nota1, nota2]
+
+    # lista_notas = [nota1, nota2]
+    # lista_alunos.append(lista_notas[:])
+    # print(lista_disciplinas)
+    # lista_notas.clear()
+
     return
+
 
 def continuar():
     while True:
-        continuar = (
-            input("Deseja continuar? [S/N] ").strip().upper()[0]
-        )
+        continuar = input("Deseja continuar? [S/N] ").strip().upper()[0]
         if continuar not in "NS":
             print("Resposta inválida. Responda S para continuar ou N para parar.")
         if continuar == "N":
             break
     return
+
 
 # PROGRAMA PRINCIPAL:
 lista_alunos = []
@@ -165,27 +190,20 @@ while True:
         mostrar_alunos(lista_alunos)
         mostrar_disciplinas(lista_disciplinas)
         if len(lista_disciplinas) <= 0 or len(lista_alunos) <= 0:
-            print("Ainda não existem disciplinas e/ou alunos cadastradas. Primeiro cadastre disciplina e/ou aluno.")
+            print(
+                "Ainda não existem disciplinas e/ou alunos cadastradas. Primeiro cadastre disciplina e/ou aluno."
+            )
         else:
+            materia = int(
+                input("Digite o código da disciplina que deseja cadastrar as notas: ")
+            )
             for aluno in lista_alunos:
-                disciplina_aluno = []
-                for disciplina in lista_disciplinas:
-                    disciplina_aluno.append({
-                        "nome": disciplina['nome'],
-                        "codigo": disciplina['codigo'],
-                        "notas": []
-                    })
-            for aluno in lista_alunos:
-                aluno["disciplina"] = disciplina_aluno[:]
-                print(aluno)
-            materia = int(input("Digite o código da disciplina que deseja cadastrar as notas: "))
-            for aluno in lista_alunos:
-                for disciplina in aluno['disciplina']:
-                    if disciplina['codigo'] == materia:
+                for disciplina in aluno["disciplina"]:
+                    if disciplina["codigo"] == materia:
                         nota1 = float(input("1ª nota: "))
                         nota2 = float(input("2ª nota: "))
 
-                    cadastro_notas(lista_disciplinas, nota1, nota2)
+                    cadastro_notas(lista_alunos, codigo_disciplina)
 
     if resposta == 10:
         print("Volte sempre.")
