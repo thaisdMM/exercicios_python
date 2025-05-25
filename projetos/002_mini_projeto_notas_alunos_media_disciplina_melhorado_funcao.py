@@ -162,13 +162,24 @@ while True:
         mostrar_disciplinas(lista_disciplinas)
         if len(lista_disciplinas) <= 0:
             print("Ainda não existem disciplinas cadastradas. Primeiro cadastre alguma disciplina.")
+        if len(lista_alunos) <= 0:
+            print("Ainda não existem alunos cadastradas. Primeiro cadastre algum aluno.")
         else:
+            for aluno in lista_alunos:
+                disciplina_aluno = []
+                for disciplina in lista_disciplinas:
+                    disciplina_aluno.append({
+                        "nome": disciplina['nome'],
+                        "codigo": disciplina['codigo'],
+                        "notas": []
+                    })
+            aluno["disciplina"] = disciplina_aluno[:]
             materia = int(input("Digite o código da disciplina que deseja cadastrar as notas: "))
-            for disciplina in lista_disciplinas:
-                if disciplina['codigo'] == materia:
-                
-                    nota1 = float(input("1ª nota: "))
-                    nota2 = float(input("2ª nota: "))
+            for aluno in lista_alunos:
+                for disciplina in aluno['disciplina']:
+                    if disciplina['codigo'] == materia:
+                        nota1 = float(input("1ª nota: "))
+                        nota2 = float(input("2ª nota: "))
 
             cadastro_notas(lista_disciplinas, nota1, nota2)
 
