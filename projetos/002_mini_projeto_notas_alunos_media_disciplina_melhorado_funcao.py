@@ -13,7 +13,6 @@ def cadastro_alunos(lista_alunos, nome_aluno, matricula_aluno):
         f"{nome_aluno}: foi cadastrado(a) com sucesso com a matrícula {matricula_aluno}!"
     )
     print("=-" * 50)
-
     return
 
 
@@ -21,29 +20,29 @@ def mostrar_alunos(lista):
     print("=-" * 50)
     return
 
-def cadastro_disciplinas(materia, codigo):
-    disciplina = {"nome": materia, "codigo": codigo}
+
+def cadastro_disciplinas(lista_disciplinas, nome_disciplina, codigo_disciplina):
+    disciplina = {"nome": nome_disciplina, "codigo": codigo_disciplina}
     lista_disciplinas.append(disciplina.copy())
     print(
-        f"Disciplina: {disciplina['nome']} cadastrada com sucesso com o código {disciplina['codigo']}"
+        f"Disciplina: {nome_disciplina} cadastrada com sucesso com o código {codigo_disciplina}"
     )
     disciplina.clear()
     print("=-" * 50)
     return
 
-def mostrar_disciplinas(lista):
-    print("Lista de matérias:")
-    for materia in lista_disciplinas:
-            materia['nome'] = materia
-            materia['codigo'] = codigo
-            print(f"MATÉRIA: {materia['nome']} = CÓDIGO: {materia['codigo']:<20}",end="")
-            # for key, value in materia.items():
-            #     print(f"{key} = {value:<20}", end="")
-    
+
+# def mostrar_disciplinas(lista):
+#     print("Lista de matérias:")
+#     for materia in lista_disciplinas:
+#         materia["nome"] = materia
+#         materia["codigo"] = codigo
+#         print(f"MATÉRIA: {materia['nome']} = CÓDIGO: {materia['codigo']:<20}", end="")
+#         # for key, value in materia.items():
+#         #     print(f"{key} = {value:<20}", end="")
+
     print("=-" * 50)
     return
-
-
 
 
 def continuar():
@@ -123,13 +122,13 @@ while True:
     if resposta == 3:
         titulo("2- Cadastrar disciplinas.")
         while True:
-            materia = input("Nome da disciplina: ").strip().title()
+            nome_disciplina = input("Nome da disciplina: ").strip().title()
             if any(
-                materia_existente["nome"] == materia
-                for materia_existente in lista_disciplinas
+                disciplina_existente["nome"] == nome_disciplina
+                for disciplina_existente in lista_disciplinas
             ):
                 print(
-                    f"A disciplina {materia} já está cadastrada. Por favor digite outra disciplina."
+                    f"A disciplina {nome_disciplina} já está cadastrada. Por favor digite outra disciplina."
                 )
                 print(linha1)
             else:
@@ -137,25 +136,24 @@ while True:
         while True:
             # quero limitar o codigo a apenas 3 digitos
             # quero importar depois a função leiaInt() que eu fiz, para aceitar só valores numéricos
-            codigo = input(f"Código da disciplina {materia}: ")
-            #int(input(f"Código da disciplina {materia}: ")) # não dá para converter para int pq dá erro no mostrar lista que é string
+            codigo_disciplina = int(input(f"Código da disciplina {nome_disciplina}: "))
             if any(
-                codigo_existente["codigo"] == codigo
+                codigo_existente["codigo"] == codigo_disciplina
                 for codigo_existente in lista_disciplinas
             ):
                 print(
-                    f"O código {codigo} já está cadastrada em outra disciplina. Por favor digite outro código."
+                    f"O código {codigo_disciplina} já está cadastrada em outra disciplina. Por favor digite outro código."
                 )
                 print(linha1)
             else:
                 break
-        cadastro_disciplinas(materia, codigo)
-    if resposta == 4:
-        titulo("4- Exibir disciplinas cadastradas")
-        # for materia in lista_disciplinas:
-        #     for key, value in materia.items():
-        #         print(f"{key} = {value:<20}", end="")
-        mostrar_disciplinas(lista_alunos)
+        cadastro_disciplinas(lista_disciplinas, nome_disciplina, codigo_disciplina)
+    # if resposta == 4:
+    #     titulo("4- Exibir disciplinas cadastradas")
+    #     # for materia in lista_disciplinas:
+    #     #     for key, value in materia.items():
+    #     #         print(f"{key} = {value:<20}", end="")
+    #     mostrar_disciplinas(lista_alunos)
 
     if resposta == 10:
         print("Volte sempre.")
