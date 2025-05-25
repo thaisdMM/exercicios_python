@@ -16,7 +16,11 @@ def cadastro_alunos(lista_alunos, nome_aluno, matricula_aluno):
     return
 
 
-def mostrar_alunos(lista):
+def mostrar_alunos(lista_alunos):
+    for aluno in lista_alunos:
+        for key, value in aluno.items():
+            print(f"{key} = {value:<20}", end="")
+        print()
     print("=-" * 50)
     return
 
@@ -32,17 +36,14 @@ def cadastro_disciplinas(lista_disciplinas, nome_disciplina, codigo_disciplina):
     return
 
 
-# def mostrar_disciplinas(lista):
-#     print("Lista de matérias:")
-#     for materia in lista_disciplinas:
-#         materia["nome"] = materia
-#         materia["codigo"] = codigo
-#         print(f"MATÉRIA: {materia['nome']} = CÓDIGO: {materia['codigo']:<20}", end="")
-#         # for key, value in materia.items():
-#         #     print(f"{key} = {value:<20}", end="")
-
+def mostrar_disciplinas(lista_disciplinas):
+    print("Lista de disciplinas:")
+    print()
+    for disciplina in lista_disciplinas:
+        for key, value in disciplina.items():
+            print(f"{key} = {value:<20}", end="")
+        print()
     print("=-" * 50)
-    return
 
 
 def continuar():
@@ -113,10 +114,6 @@ while True:
 
     if resposta == 2:
         titulo("2- Exibir alunos cadastrados:")
-        for aluno in lista_alunos:
-            for key, value in aluno.items():
-                print(f"{key} = {value:<20}", end="")
-            print()
         mostrar_alunos(lista_alunos)
 
     if resposta == 3:
@@ -148,12 +145,10 @@ while True:
             else:
                 break
         cadastro_disciplinas(lista_disciplinas, nome_disciplina, codigo_disciplina)
-    # if resposta == 4:
-    #     titulo("4- Exibir disciplinas cadastradas")
-    #     # for materia in lista_disciplinas:
-    #     #     for key, value in materia.items():
-    #     #         print(f"{key} = {value:<20}", end="")
-    #     mostrar_disciplinas(lista_alunos)
+
+    if resposta == 4:
+        titulo("4- Exibir disciplinas cadastradas")
+        mostrar_disciplinas(lista_disciplinas)
 
     if resposta == 10:
         print("Volte sempre.")
