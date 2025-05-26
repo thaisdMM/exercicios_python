@@ -7,13 +7,13 @@ def titulo(msg):
 
 
 def cadastro_alunos(lista_alunos, nome_aluno, matricula_aluno):
-    aluno = {"nome": nome_aluno, "matricula": matricula_aluno}
+    aluno = {"nome": nome_aluno, "matricula": matricula_aluno, "disciplina": []}
     lista_alunos.append(aluno.copy())
+    associacao_disciplinas_alunos(lista_alunos, lista_disciplinas)
     print(
         f"{nome_aluno}: foi cadastrado(a) com sucesso com a matrícula {matricula_aluno}!"
     )
     print("=-" * 50)
-    associacao_disciplinas_alunos(lista_alunos, lista_disciplinas)
     return
 
 
@@ -30,11 +30,10 @@ def mostrar_alunos(lista_alunos):
 def cadastro_disciplinas(lista_disciplinas, nome_disciplina, codigo_disciplina):
     disciplina = {"nome": nome_disciplina, "codigo": codigo_disciplina}
     lista_disciplinas.append(disciplina.copy())
-    associacao_disciplinas_alunos(lista_alunos, lista_disciplinas)
+    associacao_disciplinas_alunos(lista_alunos, [disciplina])
     print(
         f"Disciplina: {nome_disciplina} cadastrada com sucesso com o código {codigo_disciplina}"
     )
-    disciplina.clear()
     print("=-" * 50)
     return
 
@@ -65,6 +64,8 @@ def associacao_disciplinas_alunos(lista_alunos, lista_disciplinas):
                         "nome": disciplina["nome"],
                         "codigo": disciplina["codigo"],
                         "notas": [],
+                        "media": 0.0,
+                        "situacao": False,
                     }
                 )
 
