@@ -70,18 +70,14 @@ def associacao_disciplinas_alunos(lista_alunos, lista_disciplinas):
                 )
 
 
-def cadastro_notas(lista_alunos, codigo_disciplina):
-
-    for notas in aluno["disciplina"]:
-        notas["notas"] = [nota1, nota2]
-        #print(f"Foram cadastras com sucesso para o aluno {aluno['nome']} as notas: {aluno['notas']} em {aluno['disciplina']}")
-        ##> nao está pegando as referencias
-
-    # lista_notas = [nota1, nota2]
-    # lista_alunos.append(lista_notas[:])
-    # print(lista_disciplinas)
-    # lista_notas.clear()
-
+def cadastro_notas(lista_alunos, codigo_disciplina, nota1, nota2):
+    for aluno in lista_alunos:
+        for valor in aluno["disciplina"]:
+            if valor["codigo"] == codigo_disciplina:
+                valor["notas"] = [nota1, nota2]
+                print(f"As notas: {valor['notas']} foram cadastras com sucesso para o aluno(a) {aluno['nome']}  em {valor['nome']}")
+                valor["media"] = sum(valor["notas"])/len(valor["notas"])           
+    print("=-" * 50)
     return
 
 
@@ -197,19 +193,32 @@ while True:
                 "Ainda não existem disciplinas e/ou alunos cadastradas. Primeiro cadastre disciplina e/ou aluno."
             )
         else:
-            materia = int(
-                input("Digite o código da disciplina que deseja cadastrar as notas: ")
-            )
+            while True:
+                codigo_disciplina = int(
+                    input("Digite o código da disciplina que deseja cadastrar as notas: ")
+                )
+                if any(codigo_existente["codigo"] == codigo_disciplina for codigo_existente in lista_disciplinas):
+                        break
+                else:    
+                    print("Código de disciplina inexistente. Por favor digite o código correto.")
             for aluno in lista_alunos:
                 for disciplina in aluno["disciplina"]:
-                    if disciplina["codigo"] == materia:
+                    if disciplina["codigo"] == codigo_disciplina:
                         print(f"Notas de {aluno['nome']} na disciplina {disciplina['nome']}:")
                         nota1 = float(input("1ª nota: "))
                         nota2 = float(input("2ª nota: "))
-                    print(linha1)
-
-                    cadastro_notas(lista_alunos, codigo_disciplina)
-
+                        print(linha1)
+                        cadastro_notas(aluno, codigo_disciplina, nota1, nota2)
+                        continue
+                    # #     break
+                    # if any(codigo_existente["codigo"] == codigo_disciplina for codigo_existente in aluno["disciplina"]):
+                    #     break
+                    # else:    
+                    #     print("Código de disciplina inexistente. Por favor digite o código correto.")
+                        print(linha1)
+                        #cadastro_notas(lista_alunos, codigo_disciplina)
+                    
+                    
     if resposta == 10:
         print("Volte sempre.")
         print(linha1)
