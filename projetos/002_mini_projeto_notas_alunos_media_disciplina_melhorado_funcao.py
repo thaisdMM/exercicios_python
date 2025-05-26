@@ -74,6 +74,8 @@ def cadastro_notas(lista_alunos, codigo_disciplina):
 
     for notas in aluno["disciplina"]:
         notas["notas"] = [nota1, nota2]
+        #print(f"Foram cadastras com sucesso para o aluno {aluno['nome']} as notas: {aluno['notas']} em {aluno['disciplina']}")
+        ##> nao está pegando as referencias
 
     # lista_notas = [nota1, nota2]
     # lista_alunos.append(lista_notas[:])
@@ -201,8 +203,10 @@ while True:
             for aluno in lista_alunos:
                 for disciplina in aluno["disciplina"]:
                     if disciplina["codigo"] == materia:
+                        print(f"Notas de {aluno['nome']} na disciplina {disciplina['nome']}:")
                         nota1 = float(input("1ª nota: "))
                         nota2 = float(input("2ª nota: "))
+                    print(linha1)
 
                     cadastro_notas(lista_alunos, codigo_disciplina)
 
