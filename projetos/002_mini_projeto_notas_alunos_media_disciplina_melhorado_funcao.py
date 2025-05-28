@@ -21,8 +21,9 @@ def mostrar_alunos(lista_alunos):
     print("LISTA DE ALUNOS:")
     print()
     for aluno in lista_alunos:
-        for key, value in aluno.items():
-            print(f"{key:<5} = {value}", end="  ")
+        print(f"{aluno['nome']:<10} = matrícula {aluno['matricula']}", end="")
+        #     for key, value in aluno.items():
+        #         print(f"{key:<5} = {value}", end="  ")
         print()
         print("-" * 60)
     print("=-" * 50)
@@ -99,6 +100,13 @@ def situacao_aluno(aluno):
         print(f"{valor['nome']} = {valor['situacao']}")
         print()
     print("-" * 50)
+    return
+
+
+def exibir_dados_alunos(aluno, matricula_aluno):
+    for aluno in lista_alunos:
+        for key, value in aluno.items():
+            print(f"{key:<10} = {value}")
     return
 
 
@@ -256,6 +264,22 @@ while True:
         else:
             for aluno in lista_alunos:
                 situacao_aluno(aluno)
+
+    if resposta == 7:
+        titulo("7- Exibir a dados de um aluno específico:")
+        mostrar_alunos(lista_alunos)
+        matricula_pesquisada = int(
+            input("Digite a matrícula do aluno que deseja ver os dados: ")
+        )
+        if any(
+            matricula_existente["matricula"] == matricula_pesquisada
+            for matricula_existente in lista_alunos
+        ):
+            exibir_dados_alunos(aluno, matricula_aluno)
+        else:
+            print(
+                f"Matrícula inexistente. Verifique a matricula do aluno para exibir os dados."
+            )
 
     if resposta == 10:
         print("Volte sempre.")
