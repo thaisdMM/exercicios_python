@@ -77,22 +77,16 @@ def cadastro_notas(aluno, codigo_disciplina, nota1, nota2):
                 f"As notas: {valor['notas']} foram cadastras com sucesso para o aluno(a) {aluno['nome']}  em {valor['nome']}"
             )
             valor["media"] = sum(valor["notas"]) / len(valor["notas"])
-            #situacao_aluno(aluno)
     print("=-" * 50)
     return
 
 
 def situacao_aluno(aluno):
-    # for valor in aluno["disciplina"]:
-    #     #if valor["media"] > 0.0:
-    #     if len(valor['notas']) > 0:
-    #         for aluno in lista_alunos:
     for valor in aluno["disciplina"]:
         situacao = ""
-        if len(valor['notas']) <= 0:
-            situacao = "INDEFINIDA: aluno sem notas"
-        else: 
-            #for valor in aluno["disciplina"]:
+        if len(valor["notas"]) <= 0:
+            situacao = "INDEFINIDA"
+        else:
             if valor["media"] >= 7:
                 situacao = "APROVADO"
             elif valor["media"] >= 5:
@@ -100,22 +94,11 @@ def situacao_aluno(aluno):
             else:
                 situacao = "REPROVADO"
         valor["situacao"] = situacao
-            
+
         print(f"A situação do {aluno['nome']} é: ")
         print(f"{valor['nome']} = {valor['situacao']}")
         print()
-        
-    # for aluno in lista_alunos:
-    #     print(f"A situação do {aluno['nome']} é: ")
-    # for valor in aluno["disciplina"]:
-        # print(f"A situação do {aluno['nome']} é: ")
-        # print(f"{valor['nome']} = {valor['situacao']}")
-        # print()
-        # # for valor in aluno["disciplina"]:
-        #     if situacao:
-        #         print(f"A situação do {aluno['nome']} é: ")
-        #         print(f"{valor['nome']} = {valor['situacao']}")
-
+    print("-" * 50)
     return
 
 
@@ -261,8 +244,8 @@ while True:
                             nota2 = float(input("2ª nota: "))
                             print(linha1)
                             cadastro_notas(aluno, codigo_disciplina, nota1, nota2)
+                            print(linha1)
                             continue
-                    print(linha1)
 
     if resposta == 6:
         titulo("6- Exibir situação de todos os alunos:")
@@ -272,23 +255,7 @@ while True:
             )
         else:
             for aluno in lista_alunos:
-                for valor in aluno["disciplina"]:
-                    #if len(valor["notas"]) > 0:
-                    situacao_aluno(aluno)
-                    # else:
-                    #     print(f"{aluno['nome']} situacao indefinida = SEM NOTAS cadastradas.")
-
-            # for aluno in lista_alunos:
-            #     for valor in aluno["disciplina"]:
-            #         if valor["media"] >= 7:
-            #             situacao = "APROVADO"
-            #         elif valor["media"] >= 5:
-            #             situacao = "RECUPERAÇÃO"
-            #         elif valor["media"] >= 0:
-            #             situacao = "REPROVADO"
-            #         else:
-            #             situacao = "SEM NOTAS: indefinida"
-            #         valor["situação"] = situacao
+                situacao_aluno(aluno)
 
     if resposta == 10:
         print("Volte sempre.")
