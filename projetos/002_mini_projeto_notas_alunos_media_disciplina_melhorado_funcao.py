@@ -109,18 +109,22 @@ def buscar_aluno(lista_alunos, matricula):
             return aluno
     return None
 
-def exibir_dados_alunos(aluno, matricula_aluno):
-    for aluno in lista_alunos:
-        if any(matricula_existente['matricula'] == matricula_aluno for matricula_existente in lista_alunos):
-            print(aluno)
-            for key, value in aluno.items():
-                print(f"{key:<10} = {value}")
-            break
-            # for key, value in aluno.items():
-            #     print(f"{key:<10} = {value}")
-        else:
-            print("Não há aluno com a matrícula pesquisa. Verifique a matrícula do aluno.")
-    return
+def exibir_dados_alunos(matricula):
+    aluno = buscar_aluno(lista_alunos, matricula)
+    for key, value in aluno.items():
+        print(f"{key:<10} = {value}")
+
+    # for aluno in lista_alunos:
+    #     if any(matricula_existente['matricula'] == matricula_aluno for matricula_existente in lista_alunos):
+    #         print(aluno)
+    #         for key, value in aluno.items():
+    #             print(f"{key:<10} = {value}")
+    #         break
+    #         # for key, value in aluno.items():
+    #         #     print(f"{key:<10} = {value}")
+    #     else:
+    #         print("Não há aluno com a matrícula pesquisa. Verifique a matrícula do aluno.")
+    # return
 
 
 def continuar():
@@ -284,13 +288,19 @@ while True:
         matricula_pesquisada = int(
             input("Digite a matrícula do aluno que deseja ver os dados: ")
         )
-        for aluno in lista_alunos:
-            if any(
-                matricula_existente["matricula"] == matricula_pesquisada
-                for matricula_existente in lista_alunos
-            ):
-                exibir_dados_alunos(aluno['matricula'], matricula_pesquisada)
-                break
+        buscar_aluno(lista_alunos, matricula_pesquisada)
+        if buscar_aluno(lista_alunos, matricula_pesquisada) == None:
+            print("Não há aluno com a matrícula pesquisa. Verifique a matrícula do aluno.")
+        else:
+            exibir_dados_alunos(matricula_pesquisada)
+        
+        # for aluno in lista_alunos:
+        #     if any(
+        #         matricula_existente["matricula"] == matricula_pesquisada
+        #         for matricula_existente in lista_alunos
+        #     ):
+        #         exibir_dados_alunos(aluno['matricula'], matricula_pesquisada)
+        #         break
             
     if resposta == 10:
         print("Volte sempre.")
