@@ -73,6 +73,17 @@ def associacao_disciplinas_alunos(lista_alunos, lista_disciplinas):
                     }
                 )
 
+def existem_notas_cadastradas(lista):
+    notas_cadastradas = False
+    for aluno in lista:
+        for disciplina in aluno["disciplina"]:
+            if disciplina["situacao"] != "INDEFINIDA":
+                notas_cadastradas = True
+                break
+        if notas_cadastradas:
+            break
+    return notas_cadastradas
+
 
 def cadastro_notas(aluno, codigo_disciplina, nota1, nota2):
     for valor in aluno["disciplina"]:
@@ -137,6 +148,12 @@ def excluir_aluno(lista, aluno):
         lista.remove(aluno)
         return True
 
+def mudar_notas(aluno, nova_nota1, nova_nota2):
+    for nota in aluno['disciplina']:
+        nota['notas'] = [nova_nota1, nova_nota2]
+        nota['media'] = sum(nota['notas'])/ len(nota['notas'])
+        situacao_aluno(aluno)
+    return True
 
 def continuar():
     while True:
@@ -353,6 +370,33 @@ while True:
                     print(linha1)
 
         print("=-" * 50)
+    
+    if resposta == 9:
+        titulo("9- Trocar notas do aluno.")
+        if len(lista_disciplinas) <= 0 or len(lista_alunos) <= 0:
+            print(
+                "Ainda não existem disciplinas e/ou alunos cadastradas. Primeiro cadastre disciplina e/ou aluno."
+            )
+        else:
+            notas = existem_notas_cadastradas(lista_alunos)
+            if not notas:
+                print("Todos os alunos não possuem notas ainda. Cadastre as notas dos alunos antes de fazer alguma mudança nas notas.")
+            else:
+                mostrar_alunos(lista_alunos)
+                matricula_pesquisada = int(input("Digite a matrícula do aluno que deseja trocar as notas: "))
+                aluno_existe = buscar_aluno(lista_alunos, matricula_pesquisada)
+                if aluno_existe is None:
+                    print(f"Não há aluno com a matrícula = {matricula_pesquisada}. Verifique a matrícula do aluno para efetuar a troca de notas.")
+                else:
+                    for disciplina in aluno_existe['disciplina']:
+                        print(f"{aluno_existe['nome']}")
+                        nova_nota1 = float(input(f"{disciplina['nome']} nova nota 1: "))
+                        nova_nota2 = float(input(f"{disciplina['nome']} nova nota 2: "))
+                        mudar_notas(aluno_existe, nova_nota1, nova_nota2)
+                        print(linha1)
+                
+
+
 
     if resposta == 10:
         print("Volte sempre.")
