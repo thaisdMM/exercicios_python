@@ -122,12 +122,20 @@ def exibir_dados_alunos(lista_alunos, matricula):
     aluno = buscar_aluno(lista_alunos, matricula)
     if aluno == None:
         print(
-            "Não há aluno com a matrícula pesquisada. Verifique a matrícula do aluno."
+            "Não há aluno com a matrícula pesquisada. Verifique a matrícula do aluno que quer exibir os dados."
         )
     else:
         for key, value in aluno.items():
             print(f"{key:<10} = {value}")
     print("=-" * 50)
+
+
+def excluir_aluno(lista, aluno):
+    if aluno is None:
+        return False
+    else:
+        lista.remove(aluno)
+        return True
 
 
 def continuar():
@@ -272,7 +280,7 @@ while True:
                             print(linha1)
                             cadastro_notas(aluno, codigo_disciplina, nota1, nota2)
                             print(linha1)
-                            
+
     if resposta == 6:
         titulo("6- Exibir situação de todos os alunos:")
         if len(lista_alunos) <= 0 or len(lista_disciplinas) <= 0:
@@ -304,6 +312,47 @@ while True:
             input("Digite a matrícula do aluno que deseja ver os dados: ")
         )
         exibir_dados_alunos(lista_alunos, matricula_pesquisada)
+
+    if resposta == 8:
+        titulo("Excluir aluno:")
+        if len(lista_alunos) <= 0:
+            print(
+                "Lista de alunos vazia. Para excluir algum aluno é necessário que haja alunos cadastrados na lista primeiro."
+            )
+        else:
+            mostrar_alunos(lista_alunos)
+            matricula_pesquisada = int(
+                input("Digite a matrícula do aluno que deseja excluir os dados: ")
+            )
+            aluno_buscado = buscar_aluno(lista_alunos, matricula_pesquisada)
+            if aluno_buscado is None:
+                print(
+                    f"Não há aluno com a matrícula = {matricula_pesquisada}. Verifique a matrícula do aluno para efetuar a exclusão."
+                )
+            else:
+                while True:
+                    usuario = (
+                        input(
+                            f"Você irá excluir da lista de alunos o aluno {aluno_buscado['nome']}, matricula {aluno_buscado['matricula']}. Digite S para excluir ou N para não excluir e sair. "
+                        )
+                        .strip()
+                        .upper()[0]
+                    )
+                    if usuario == "N":
+                        print("Não foi feita a exclusão.")
+                        break
+                    if usuario == "S":
+                        exclusao_aluno = excluir_aluno(lista_alunos, aluno_buscado)
+                        if exclusao_aluno:
+                            print(f"Aluno removido com sucesso.")
+                        else:
+                            print("Aluno não existe ou não pode ser removido.")
+                        break
+                    else:
+                        print("Resposta inválida. Digite S ou N.")
+                    print(linha1)
+
+        print("=-" * 50)
 
     if resposta == 10:
         print("Volte sempre.")
