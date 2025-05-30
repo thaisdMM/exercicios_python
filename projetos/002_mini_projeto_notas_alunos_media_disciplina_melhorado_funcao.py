@@ -20,10 +20,13 @@ def cadastro_alunos(lista_alunos, nome_aluno, matricula_aluno):
 def mostrar_alunos(lista_alunos):
     print("LISTA DE ALUNOS:")
     print()
-    for aluno in lista_alunos:
-        print(f"{aluno['nome']:<10} = matrícula {aluno['matricula']}", end="")
-        print()
-        print("-" * 60)
+    if len(lista_alunos) <= 0:
+        print("Ainda não existem alunos cadastrados.")
+    else:
+        for aluno in lista_alunos:
+            print(f"{aluno['nome']:<5} = matrícula {aluno['matricula']}", end="")
+            print()
+            print("-" * 60)
     print("=-" * 50)
 
 
@@ -41,10 +44,13 @@ def cadastro_disciplinas(lista_disciplinas, nome_disciplina, codigo_disciplina):
 def mostrar_disciplinas(lista_disciplinas):
     print("LISTA DE DISCIPLINAS:")
     print()
-    for disciplina in lista_disciplinas:
-        for key, value in disciplina.items():
-            print(f"{key:<5} = {value}", end="  ")
-        print()
+    if len(lista_disciplinas) <= 0:
+        print("Ainda não existem disciplinas cadastradas.")
+    else:
+        for disciplina in lista_disciplinas:
+            for key, value in disciplina.items():
+                print(f"{key:<5} = {value}", end="  ")
+            print()
     print("=-" * 50)
 
 
@@ -63,7 +69,7 @@ def associacao_disciplinas_alunos(lista_alunos, lista_disciplinas):
                         "codigo": disciplina["codigo"],
                         "notas": [],
                         "media": 0.0,
-                        "situacao": False,
+                        "situacao": "INDEFINIDA",
                     }
                 )
 
@@ -83,7 +89,6 @@ def cadastro_notas(aluno, codigo_disciplina, nota1, nota2):
 
 def situacao_aluno(aluno):
     for valor in aluno["disciplina"]:
-        situacao = ""
         if len(valor["notas"]) <= 0:
             situacao = "INDEFINIDA"
         else:
@@ -96,18 +101,12 @@ def situacao_aluno(aluno):
         valor["situacao"] = situacao
     return
 
+
 def exibir_situacao_aluno(aluno):
-    situacao_aluno(aluno)
     for valor in aluno["disciplina"]:
-        print(f"A situação do {aluno['nome']} é: ")
+        print(f"A situação de {aluno['nome']} é: ")
         print(f"{valor['nome']} = {valor['situacao']}")
         print()
-    #if aluno_situacao == "INDEFINIDA":
-        
-        # for valor in aluno["disciplina"]:
-        #     print(f"A situação do {aluno['nome']} é: ")
-        #     print(f"{['nome']} = {valor['situacao']}")
-        #     print()
     print("-" * 50)
     return
 
@@ -122,7 +121,9 @@ def buscar_aluno(lista_alunos, matricula):
 def exibir_dados_alunos(lista_alunos, matricula):
     aluno = buscar_aluno(lista_alunos, matricula)
     if aluno == None:
-        print("Não há aluno com a matrícula pesquisa. Verifique a matrícula do aluno.")
+        print(
+            "Não há aluno com a matrícula pesquisada. Verifique a matrícula do aluno."
+        )
     else:
         for key, value in aluno.items():
             print(f"{key:<10} = {value}")
@@ -259,7 +260,6 @@ while True:
             for aluno in lista_alunos:
                 for disciplina in aluno["disciplina"]:
                     if disciplina["codigo"] == codigo_disciplina:
-                        # if any(notas_existente['notas'] >= len(disciplina['notas']) for notas_existente in aluno['disciplina']):
                         if len(disciplina["notas"]) > 0:
                             continue
                         else:
@@ -272,23 +272,30 @@ while True:
                             print(linha1)
                             cadastro_notas(aluno, codigo_disciplina, nota1, nota2)
                             print(linha1)
-                            continue
-
+                            
     if resposta == 6:
         titulo("6- Exibir situação de todos os alunos:")
         if len(lista_alunos) <= 0 or len(lista_disciplinas) <= 0:
             print(
                 "Ainda não existem disciplinas e/ou alunos cadastradas. Primeiro cadastre disciplina e/ou aluno e notas."
             )
-        for aluno in lista_alunos:
-            for disciplina in aluno['disciplina']:
-                if all(situacao_existente['situacao'] == "INDEFINIDA" for situacao_existente in aluno['disciplina']):
-                    print("Alunos sem notas ainda. Situação indefinida. Cadastre as notas dos alunos.")
-                    break            
-    
-        
-        for aluno in lista_alunos:
-            exibir_situacao_aluno(aluno)
+        else:
+            notas_cadastradas = False
+            for aluno in lista_alunos:
+                for disciplina in aluno["disciplina"]:
+                    if disciplina["situacao"] != "INDEFINIDA":
+                        notas_cadastradas = True
+                        break
+                if notas_cadastradas:
+                    break
+
+            if notas_cadastradas:
+                for aluno in lista_alunos:
+                    exibir_situacao_aluno(aluno)
+            if not notas_cadastradas:
+                print(
+                    "Todos os alunos não possuem notas ainda. Cadastre as notas dos alunos."
+                )
 
     if resposta == 7:
         titulo("7- Exibir a dados de um aluno específico:")
