@@ -163,7 +163,8 @@ def mudar_notas(aluno, disciplina_codigo, nova_nota1, nova_nota2):
             nota["notas"] = [nova_nota1, nova_nota2]
             nota["media"] = sum(nota["notas"]) / len(nota["notas"])
             situacao_aluno(aluno)
-    return True
+            return True        
+    return False
 
 
 def continuar():
@@ -430,28 +431,33 @@ while True:
                             "Qual o código da disciplina que deseja alterar as notas? "
                         )
                     )
-                    if any(
-                        codigo_pesquisado["codigo"] == codigo_existe
-                        for codigo_pesquisado in lista_disciplinas
-                    ):
-
-                        for disciplina in aluno_existe["disciplina"]:
-                            if disciplina["codigo"] == codigo_existe:
-                                print(f"{aluno_existe['nome']}")
-                                nova_nota1 = float(
-                                    input(f"{disciplina['nome']} nova nota 1: ")
-                                )
-                                nova_nota2 = float(
-                                    input(f"{disciplina['nome']} nova nota 2: ")
-                                )
-                                mudar_notas(
-                                    aluno_existe, codigo_existe, nova_nota1, nova_nota2
-                                )
-                                print(linha1)
-                    else:
+                    # if any(
+                    #     codigo_pesquisado["codigo"] == codigo_existe
+                    #     for codigo_pesquisado in lista_disciplinas
+                    # ):
+                    disciplina_existe = buscar_disciplina(lista_disciplinas, codigo_existe)
+                    if not disciplina_existe:
                         print(
                             "Código de disciplina inexistente. Por favor digite o código correto."
                         )
+                    else:
+                        # for disciplina in aluno_existe["disciplina"]:
+                        #     if disciplina["codigo"] == codigo_existe:
+                        print(f"{aluno_existe['nome']}")
+                        nova_nota1 = float(
+                            input(f"{disciplina_existe['nome']} nova nota 1: ")
+                        )
+                        nova_nota2 = float(
+                            input(f"{disciplina_existe['nome']} nova nota 2: ")
+                        )
+                        mudar_notas(
+                            aluno_existe, codigo_existe, nova_nota1, nova_nota2
+                        )
+                        print(linha1)
+                    # else:
+                    #     print(
+                    #         "Código de disciplina inexistente. Por favor digite o código correto."
+                    #     )
 
     if resposta == 10:
         print("Volte sempre.")
