@@ -73,11 +73,12 @@ def associacao_disciplinas_alunos(lista_alunos, lista_disciplinas):
                     }
                 )
 
+
 def existem_notas_cadastradas(lista):
     notas_cadastradas = False
     for aluno in lista:
         for disciplina in aluno["disciplina"]:
-            if disciplina["situacao"] != "INDEFINIDA":
+            if disciplina["notas"]:
                 notas_cadastradas = True
                 break
         if notas_cadastradas:
@@ -129,6 +130,17 @@ def buscar_aluno(lista_alunos, matricula):
     return None
 
 
+def buscar_disciplina(lista, codigo):
+    for disciplina in lista:
+        if any(
+            codigo_existente["codigo"] == codigo
+            for codigo_existente in lista_disciplinas
+        ):
+            return disciplina
+        else:
+            return None
+
+
 def exibir_dados_alunos(lista_alunos, matricula):
     aluno = buscar_aluno(lista_alunos, matricula)
     if aluno == None:
@@ -148,12 +160,15 @@ def excluir_aluno(lista, aluno):
         lista.remove(aluno)
         return True
 
-def mudar_notas(aluno, nova_nota1, nova_nota2):
-    for nota in aluno['disciplina']:
-        nota['notas'] = [nova_nota1, nova_nota2]
-        nota['media'] = sum(nota['notas'])/ len(nota['notas'])
-        situacao_aluno(aluno)
+
+def mudar_notas(aluno, disciplina_codigo, nova_nota1, nova_nota2):
+    for nota in aluno["disciplina"]:
+        if nota["codigo"] == disciplina_codigo:
+            nota["notas"] = [nova_nota1, nova_nota2]
+            nota["media"] = sum(nota["notas"]) / len(nota["notas"])
+            situacao_aluno(aluno)
     return True
+
 
 def continuar():
     while True:
@@ -198,7 +213,7 @@ while True:
             if 0 < resposta <= 10:
                 break
             else:
-                print("Resposta inválida! Digite de acordo com o menu.")
+                print("Resposta inválida! Escolha de acordo com o menu.")
         print(linha1)
 
     if resposta == 1:
@@ -242,14 +257,26 @@ while True:
             # quero limitar o codigo a apenas 3 digitos
             # quero importar depois a função leiaInt() que eu fiz, para aceitar só valores numéricos
             codigo_disciplina = int(input(f"Código da disciplina {nome_disciplina}: "))
-            if any(
-                codigo_existente["codigo"] == codigo_disciplina
-                for codigo_existente in lista_disciplinas
-            ):
+
+            # if any(
+            #     codigo_existente["codigo"] == codigo_disciplina
+            #     for codigo_existente in lista_disciplinas
+            # ):
+            #     print(
+            #         f"O código {codigo_disciplina} já está cadastrada em outra disciplina. Por favor digite outro código."
+            #     )
+            #     print(linha1)
+            # else:
+            #     break
+            pesquisar_disciplina = buscar_disciplina(
+                lista_disciplinas, codigo_disciplina
+            )
+            if pesquisar_disciplina:
                 print(
                     f"O código {codigo_disciplina} já está cadastrada em outra disciplina. Por favor digite outro código."
                 )
                 print(linha1)
+
             else:
                 break
         cadastro_disciplinas(lista_disciplinas, nome_disciplina, codigo_disciplina)
@@ -273,10 +300,16 @@ while True:
                         "Digite o código da disciplina que deseja cadastrar as notas: "
                     )
                 )
-                if any(
-                    codigo_existente["codigo"] == codigo_disciplina
-                    for codigo_existente in lista_disciplinas
-                ):
+                # if any(
+                #     codigo_existente["codigo"] == codigo_disciplina
+                #     for codigo_existente in lista_disciplinas
+                # ):
+                #     break
+                # else:
+                disciplina_existe = buscar_disciplina(
+                    lista_disciplinas, codigo_disciplina
+                )
+                if disciplina_existe:
                     break
                 else:
                     print(
@@ -305,19 +338,21 @@ while True:
                 "Ainda não existem disciplinas e/ou alunos cadastradas. Primeiro cadastre disciplina e/ou aluno e notas."
             )
         else:
-            notas_cadastradas = False
-            for aluno in lista_alunos:
-                for disciplina in aluno["disciplina"]:
-                    if disciplina["situacao"] != "INDEFINIDA":
-                        notas_cadastradas = True
-                        break
-                if notas_cadastradas:
-                    break
+            # notas_cadastradas = False
+            # for aluno in lista_alunos:
+            #     for disciplina in aluno["disciplina"]:
+            #         if disciplina["situacao"] != "INDEFINIDA":
+            #             notas_cadastradas = True
+            #             break
+            #     if notas_cadastradas:
+            #         break
 
-            if notas_cadastradas:
+            notas_existem = existem_notas_cadastradas(lista_alunos)
+
+            if notas_existem:
                 for aluno in lista_alunos:
                     exibir_situacao_aluno(aluno)
-            if not notas_cadastradas:
+            if not notas_existem:
                 print(
                     "Todos os alunos não possuem notas ainda. Cadastre as notas dos alunos."
                 )
@@ -368,9 +403,8 @@ while True:
                     else:
                         print("Resposta inválida. Digite S ou N.")
                     print(linha1)
-
         print("=-" * 50)
-    
+
     if resposta == 9:
         titulo("9- Trocar notas do aluno.")
         if len(lista_disciplinas) <= 0 or len(lista_alunos) <= 0:
@@ -380,30 +414,52 @@ while True:
         else:
             notas = existem_notas_cadastradas(lista_alunos)
             if not notas:
-                print("Todos os alunos não possuem notas ainda. Cadastre as notas dos alunos antes de fazer alguma mudança nas notas.")
+                print(
+                    "Todos os alunos não possuem notas ainda. Cadastre as notas dos alunos antes de fazer alguma mudança nas notas."
+                )
             else:
                 mostrar_alunos(lista_alunos)
-                matricula_pesquisada = int(input("Digite a matrícula do aluno que deseja trocar as notas: "))
+                matricula_pesquisada = int(
+                    input("Digite a matrícula do aluno que deseja trocar as notas: ")
+                )
                 aluno_existe = buscar_aluno(lista_alunos, matricula_pesquisada)
                 if aluno_existe is None:
-                    print(f"Não há aluno com a matrícula = {matricula_pesquisada}. Verifique a matrícula do aluno para efetuar a troca de notas.")
+                    print(
+                        f"Não há aluno com a matrícula = {matricula_pesquisada}. Verifique a matrícula do aluno para efetuar a troca de notas."
+                    )
                 else:
-                    for disciplina in aluno_existe['disciplina']:
-                        print(f"{aluno_existe['nome']}")
-                        nova_nota1 = float(input(f"{disciplina['nome']} nova nota 1: "))
-                        nova_nota2 = float(input(f"{disciplina['nome']} nova nota 2: "))
-                        mudar_notas(aluno_existe, nova_nota1, nova_nota2)
-                        print(linha1)
-                
+                    mostrar_disciplinas(lista_disciplinas)
+                    codigo_existe = int(
+                        input(
+                            "Qual o código da disciplina que deseja alterar as notas? "
+                        )
+                    )
+                    if any(
+                        codigo_pesquisado["codigo"] == codigo_existe
+                        for codigo_pesquisado in lista_disciplinas
+                    ):
 
-
+                        for disciplina in aluno_existe["disciplina"]:
+                            if disciplina["codigo"] == codigo_existe:
+                                print(f"{aluno_existe['nome']}")
+                                nova_nota1 = float(
+                                    input(f"{disciplina['nome']} nova nota 1: ")
+                                )
+                                nova_nota2 = float(
+                                    input(f"{disciplina['nome']} nova nota 2: ")
+                                )
+                                mudar_notas(
+                                    aluno_existe, codigo_existe, nova_nota1, nova_nota2
+                                )
+                                print(linha1)
+                    else:
+                        print(
+                            "Código de disciplina inexistente. Por favor digite o código correto."
+                        )
 
     if resposta == 10:
         print("Volte sempre.")
         print(linha1)
         break
 
-
-print(lista_alunos)
-print(lista_disciplinas)
 print("\nPrograma finalizado!")
