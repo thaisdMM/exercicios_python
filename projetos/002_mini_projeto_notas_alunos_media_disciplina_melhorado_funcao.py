@@ -130,15 +130,11 @@ def buscar_aluno(lista_alunos, matricula):
     return None
 
 
-def buscar_disciplina(lista, codigo):
-    for disciplina in lista:
-        if any(
-            codigo_existente["codigo"] == codigo
-            for codigo_existente in lista_disciplinas
-        ):
-            return disciplina
-        else:
-            return None
+def buscar_disciplina(lista_disciplina, codigo):
+    for disciplina in lista_disciplina:
+        if disciplina["codigo"] == codigo:
+            return disciplina  
+    return None
 
 
 def exibir_dados_alunos(lista_alunos, matricula):
