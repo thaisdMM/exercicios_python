@@ -133,7 +133,7 @@ def buscar_aluno(lista_alunos, matricula):
 def buscar_disciplina(lista_disciplina, codigo):
     for disciplina in lista_disciplina:
         if disciplina["codigo"] == codigo:
-            return disciplina  
+            return disciplina
     return None
 
 
@@ -163,7 +163,7 @@ def mudar_notas(aluno, disciplina_codigo, nova_nota1, nova_nota2):
             nota["notas"] = [nova_nota1, nova_nota2]
             nota["media"] = sum(nota["notas"]) / len(nota["notas"])
             situacao_aluno(aluno)
-            return True        
+            return True
     return False
 
 
@@ -254,17 +254,6 @@ while True:
             # quero limitar o codigo a apenas 3 digitos
             # quero importar depois a função leiaInt() que eu fiz, para aceitar só valores numéricos
             codigo_disciplina = int(input(f"Código da disciplina {nome_disciplina}: "))
-
-            # if any(
-            #     codigo_existente["codigo"] == codigo_disciplina
-            #     for codigo_existente in lista_disciplinas
-            # ):
-            #     print(
-            #         f"O código {codigo_disciplina} já está cadastrada em outra disciplina. Por favor digite outro código."
-            #     )
-            #     print(linha1)
-            # else:
-            #     break
             pesquisar_disciplina = buscar_disciplina(
                 lista_disciplinas, codigo_disciplina
             )
@@ -297,12 +286,6 @@ while True:
                         "Digite o código da disciplina que deseja cadastrar as notas: "
                     )
                 )
-                # if any(
-                #     codigo_existente["codigo"] == codigo_disciplina
-                #     for codigo_existente in lista_disciplinas
-                # ):
-                #     break
-                # else:
                 disciplina_existe = buscar_disciplina(
                     lista_disciplinas, codigo_disciplina
                 )
@@ -431,18 +414,15 @@ while True:
                             "Qual o código da disciplina que deseja alterar as notas? "
                         )
                     )
-                    # if any(
-                    #     codigo_pesquisado["codigo"] == codigo_existe
-                    #     for codigo_pesquisado in lista_disciplinas
-                    # ):
-                    disciplina_existe = buscar_disciplina(lista_disciplinas, codigo_existe)
+                    disciplina_existe = buscar_disciplina(
+                        lista_disciplinas, codigo_existe
+                    )
                     if not disciplina_existe:
                         print(
                             "Código de disciplina inexistente. Por favor digite o código correto."
                         )
                     else:
-                        # for disciplina in aluno_existe["disciplina"]:
-                        #     if disciplina["codigo"] == codigo_existe:
+                        # fazer uma função para quando a disciplina escolhida não tiver notas
                         print(f"{aluno_existe['nome']}")
                         nova_nota1 = float(
                             input(f"{disciplina_existe['nome']} nova nota 1: ")
@@ -450,14 +430,8 @@ while True:
                         nova_nota2 = float(
                             input(f"{disciplina_existe['nome']} nova nota 2: ")
                         )
-                        mudar_notas(
-                            aluno_existe, codigo_existe, nova_nota1, nova_nota2
-                        )
+                        mudar_notas(aluno_existe, codigo_existe, nova_nota1, nova_nota2)
                         print(linha1)
-                    # else:
-                    #     print(
-                    #         "Código de disciplina inexistente. Por favor digite o código correto."
-                    #     )
 
     if resposta == 10:
         print("Volte sempre.")
