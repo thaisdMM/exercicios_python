@@ -1,3 +1,13 @@
+def linha(tamanho = 50):
+    return "-" * tamanho
+
+
+def titulo(msg):
+    tamanho = len(msg) + 4
+    print("*" * tamanho)
+    print(f"  {msg}")
+    print("*" * tamanho)
+    return
 
 
 
