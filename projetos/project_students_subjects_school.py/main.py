@@ -1,5 +1,9 @@
 from library.interface import project_interfaces
+from library.students import students_functions
 from time import sleep
+
+lista_alunos = []
+
 
 while True:
     resposta = project_interfaces.menu(
@@ -19,6 +23,22 @@ while True:
     # queria ver se é possivel usar o tamanho da lista depois para definir o fim da resposta
     if resposta == 1:
         project_interfaces.titulo(f"{resposta}- Cadastrar alunos.")
+        nome_aluno = input("Nome do aluno: ").strip().title()
+        while True:
+            matricula_aluno = project_interfaces.leiaInt(f"Matrícula do aluno {nome_aluno}: ")
+            if any(
+                matricula_existente["matricula"] == matricula_aluno
+                for matricula_existente in lista_alunos
+            ):
+                print(
+                    f"Matrícula {matricula_aluno} já cadastrada em outro aluno. Por favor, digite outro número de matrícula."
+                )
+                print(project_interfaces.linha())
+            else:
+                break
+        print(project_interfaces.linha())
+        students_functions.cadastro_alunos(lista_alunos, nome_aluno, matricula_aluno)
+
     elif resposta == 2:
         project_interfaces.titulo(f"{resposta}- Exibir alunos cadastrados:")
     elif resposta == 3:
@@ -45,3 +65,4 @@ while True:
         break
             
     sleep(1)
+print(lista_alunos)
