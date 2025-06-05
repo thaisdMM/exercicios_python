@@ -43,9 +43,5 @@ while True:
         sleep(1)
         print("Volte sempre.")
         break
-
-    else:
-        print(
-            f"\033[31mERRO! Opção '{resposta}' inexistente no menu. Escolha de acordo com o menu.\033[m"
-        )
+            
     sleep(1)

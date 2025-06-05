@@ -34,5 +34,24 @@ def menu(lista):
         print(f"\033[33m{contador:2}\033[m - \033[34m{item}\033[m")
         contador += 1
     print(linha())
-    opcao = leiaInt("\033[32mBem vindo ao programa. Em que podemos ajudar? Digite a opção: \033[m")
+    while True:
+        opcao = leiaInt(
+            "\033[32mBem vindo ao programa. Em que podemos ajudar? Digite a opção: \033[m"
+        )
+        if opcao > 0 and opcao <= len(lista):
+            break
+        else:
+            print(
+                f"\033[31mERRO! Opção '{opcao}' inexistente no menu. Escolha de acordo com o menu.\033[m"
+            )
     return opcao
+
+
+def continuar():
+    while True:
+        continuar = input("Deseja continuar? [S/N] ").strip().upper()[0]
+        if continuar not in "NS":
+            print("Resposta inválida. Responda S para continuar ou N para parar.")
+        if continuar == "N":
+            break
+    return
