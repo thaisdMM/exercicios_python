@@ -1,8 +1,22 @@
 from library.interface import project_interfaces
 from library.students import students_functions
+from library.files import project_file
 from time import sleep
+import os
 
 lista_alunos = []
+
+
+# Caminho absoluto da pasta
+PASTA_BASE = os.path.dirname(os.path.abspath(__file__))
+
+# # Caminho absoluto até o arquivo
+CAMINHO_ARQUIVO = os.path.join(
+    PASTA_BASE, "files_created/cadastro_alunos_matricula.json"
+)
+
+
+arquivo = CAMINHO_ARQUIVO
 
 
 while True:
@@ -23,9 +37,13 @@ while True:
     # queria ver se é possivel usar o tamanho da lista depois para definir o fim da resposta
     if resposta == 1:
         project_interfaces.titulo(f"{resposta}- Cadastrar alunos.")
+        file_path = arquivo
+        print(project_file.verificar_arquivo_existe(file_path))
         nome_aluno = input("Nome do aluno: ").strip().title()
         while True:
-            matricula_aluno = project_interfaces.leiaInt(f"Matrícula do aluno {nome_aluno}: ")
+            matricula_aluno = project_interfaces.leiaInt(
+                f"Matrícula do aluno {nome_aluno}: "
+            )
             if any(
                 matricula_existente["matricula"] == matricula_aluno
                 for matricula_existente in lista_alunos
@@ -63,6 +81,6 @@ while True:
         sleep(1)
         print("Volte sempre.")
         break
-            
+
     sleep(1)
 print(lista_alunos)
