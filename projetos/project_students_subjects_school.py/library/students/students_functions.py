@@ -1,22 +1,22 @@
 from library.subjects import subjects_functions
+from library.files import project_file
+import json
 
 
-def cadastro_alunos(lista_alunos, nome_aluno, matricula_aluno):
-    try:
-        aluno = {"nome": nome_aluno, "matricula": matricula_aluno, "disciplina": []}
-    except (ValueError, TypeError):
-        print(f"Os dados inseridos apresentam erros.")
-    try:
-        lista_alunos.append(aluno.copy())
-        # subjects_functions.associacao_disciplinas_alunos(lista_alunos, lista_disciplinas)
-    except FileNotFoundError:
-        print("Não foi possivel anexar a lista ao dicionário. O arquivo não foi encontrado.")
-    else:
-        print(
-            f"{nome_aluno}: foi cadastrado(a) com sucesso com a matrícula {matricula_aluno}!"
-        )
-    print("=-" * 50)
-    return
+def cadastro_alunos(nome_aluno, matricula_aluno):
+    # lista = []
+    aluno = {"nome": nome_aluno, "matricula": matricula_aluno, "disciplina": []}
+    # lista.append(aluno.copy())
+
+    # project_file.subscrever_arquivo(
+    #     "cadastro_alunos_matricula.json", aluno
+    # )
+    return aluno
+    # associacao_disciplinas_alunos(lista_alunos, lista_disciplinas)
+    # print(
+    #     f"{nome_aluno}: foi cadastrado(a) com sucesso com a matrícula {matricula_aluno}!"
+    # )
+    # print("=-" * 50)
 
 
 def mostrar_alunos(lista_alunos):
