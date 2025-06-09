@@ -3,20 +3,21 @@ from library.students import students_functions
 from library.files import project_file
 from time import sleep
 import os
+import json
 
 lista_alunos = []
 
 
-# Caminho absoluto da pasta
-PASTA_BASE = os.path.dirname(os.path.abspath(__file__))
+# # Caminho absoluto da pasta
+# PASTA_BASE = os.path.dirname(os.path.abspath(__file__))
 
-# # Caminho absoluto até o arquivo
-CAMINHO_ARQUIVO = os.path.join(
-    PASTA_BASE, "files_created/cadastro_alunos_matricula.json"
-)
+# # # Caminho absoluto até o arquivo
+# CAMINHO_ARQUIVO = os.path.join(
+#     PASTA_BASE, "files_created/cadastro_alunos_matricula.json"
+# )
 
 
-arquivo = CAMINHO_ARQUIVO
+# arquivo = CAMINHO_ARQUIVO
 
 
 while True:
@@ -37,8 +38,11 @@ while True:
     # queria ver se é possivel usar o tamanho da lista depois para definir o fim da resposta
     if resposta == 1:
         project_interfaces.titulo(f"{resposta}- Cadastrar alunos.")
-        file_path = arquivo
-        print(project_file.verificar_arquivo_existe(file_path))
+        file_path = "cadastro_alunos_matricula.json"
+
+        if not project_file.verificar_arquivo_existe(file_path):
+            project_file.criar_arquivo(file_path)
+
         nome_aluno = input("Nome do aluno: ").strip().title()
         while True:
             matricula_aluno = project_interfaces.leiaInt(
@@ -55,7 +59,12 @@ while True:
             else:
                 break
         print(project_interfaces.linha())
-        students_functions.cadastro_alunos(lista_alunos, nome_aluno, matricula_aluno)
+        aluno = students_functions.cadastro_alunos(nome_aluno, matricula_aluno)
+        project_file.append_arquivo(file_path, aluno)
+        print(f"Aluno cadastrado com sucesso")
+        # dados = students_functions.cadastro_alunos(nome_aluno, matricula_aluno)
+        # project_file.subscrever_arquivo(file_path, dados)
+        # print(f"Arquivo de alunos criado com sucesso em {file_path}")
 
     elif resposta == 2:
         project_interfaces.titulo(f"{resposta}- Exibir alunos cadastrados:")
