@@ -53,5 +53,6 @@ def continuar():
         if continuar not in "NS":
             print("Resposta inválida. Responda S para continuar ou N para parar.")
         if continuar == "N":
-            break
-    return
+            return False
+        else:
+            return True
