@@ -41,6 +41,16 @@ def append_arquivo(file_path, data):
         return "Você não tem permissão para criar esse arquivo."
 
 
+def ler_arquivo(file_path):
+    try:
+        with open(file_path, "r") as read_file:
+            content = json.load(read_file)
+    except FileNotFoundError:
+        return "Arquivo não encontrado"
+    except PermissionError:
+        return "Você não tem permissão para criar esse arquivo."
+
+
 # def verificar_arquivo_existe(file_path):
 #     try:
 #         with open(file_path, 'x') as file:
