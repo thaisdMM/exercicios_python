@@ -1,16 +1,32 @@
 from library.subjects import subjects_functions
 from library.files import project_file
+from library.interface import project_interfaces
 import json
 
+## fazer uma função para coletar dados de alunos em um arquivo
+## fazer outra funçao para apenas cadastrar alunos - chama a coleta, depois cadastra os demais no looping
+def cadastro_alunos(nome_aluno, matricula_aluno, arquivo):
+    arquivo = "cadastro_alunos_matricula.json"
+    
+    if not project_file.verificar_arquivo_existe(arquivo):
+        project_file.criar_arquivo(arquivo)
+    else:
+        dados_aluno = project_file.ler_arquivo(arquivo)
+    # looping de cadastro
+    project_interfaces.continuar()
+    lista_alunos = []
+    if dados_aluno:
+        lista_alunos.append(dados_aluno[:])
+    # verificar se a matricula existe:
 
-def cadastro_alunos(nome_aluno, matricula_aluno):
-    # lista = []
+    # se matricula não existe:
     aluno = {"nome": nome_aluno, "matricula": matricula_aluno, "disciplina": []}
-    # lista.append(aluno.copy())
+    lista_alunos.append(aluno.copy())
 
-    # project_file.subscrever_arquivo(
-    #     "cadastro_alunos_matricula.json", aluno
-    # )
+
+    # quando o loopoing finalizar - salvar os dados no arquivo:
+    project_file.subscrever_arquivo(arquivo, lista_alunos
+    )
     return aluno
     # associacao_disciplinas_alunos(lista_alunos, lista_disciplinas)
     # print(
