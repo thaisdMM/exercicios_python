@@ -48,11 +48,18 @@ def menu(lista):
 
 
 def continuar():
-    while True:
-        continuar = input("Deseja continuar? [S/N] ").strip().upper()[0]
-        if continuar not in "NS":
+    resposta = None
+    while resposta == None:
+        try:
+            continuar = input("Deseja continuar? [S/N] ").strip().upper()[0]
+            if continuar not in "NS":
+                print("Resposta inválida. Responda S para continuar ou N para parar.")
+                resposta = None
+            if continuar == "N":
+                resposta = False
+            if continuar == "S":
+                resposta = True
+        except (ValueError, TypeError, IndexError, KeyboardInterrupt):
             print("Resposta inválida. Responda S para continuar ou N para parar.")
-        if continuar == "N":
-            return False
-        else:
-            return True
+            resposta = None
+    return resposta
