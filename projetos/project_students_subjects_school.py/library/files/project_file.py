@@ -10,22 +10,24 @@ def verificar_arquivo_existe(file_path):
         return None
 
 
-def criar_arquivo(file_path):
-    data = []
-    try:
-        with open(file_path, "x") as file:
-            pass
-    except FileExistsError:
-        print(f"O arquivo já existe")
-    except PermissionError:
-        print(f"Você não tem permissão para criar esse arquivo.")
+# def criar_arquivo(file_path):
+#     data = []
+#     try:
+#         with open(file_path, "x") as file:
+#             pass
+#     except FileExistsError:
+#         print(f"O arquivo já existe")
+#     except PermissionError:
+#         print(f"Você não tem permissão para criar esse arquivo.")
 
 
-def subscrever_arquivo(file_paht, data):
+def criar_subscrever_arquivo(file_paht, data=None):
+    if data is None:
+        data = []
     try:
         with open(file_paht, "w") as file:
             json.dump(data, file, indent=4)
-            return file
+            return True
     except FileNotFoundError:
         return "Arquivo não encontrado"
     except PermissionError:
@@ -45,6 +47,7 @@ def ler_arquivo(file_path):
     try:
         with open(file_path, "r") as read_file:
             content = json.load(read_file)
+            return content
     except FileNotFoundError:
         return "Arquivo não encontrado"
     except PermissionError:
