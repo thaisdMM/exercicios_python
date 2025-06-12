@@ -4,6 +4,16 @@ from library.interface import project_interfaces
 import json
 
 ## fazer uma função para coletar dados de alunos em um arquivo
+def coleta_dados_alunos(arquivo):
+    arquivo = "cadastro_alunos_matricula.json"
+    if not project_file.verificar_arquivo_existe(arquivo):
+        project_file.criar_subscrever_arquivo(arquivo)
+        return arquivo
+    else:
+        dados_aluno = project_file.ler_arquivo(arquivo)
+        return dados_aluno
+
+
 ## fazer outra funçao para apenas cadastrar alunos - chama a coleta, depois cadastra os demais no looping
 def cadastro_alunos(nome_aluno, matricula_aluno, arquivo):
     arquivo = "cadastro_alunos_matricula.json"
