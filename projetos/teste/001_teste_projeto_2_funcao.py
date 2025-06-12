@@ -36,33 +36,37 @@
 # print("2 vez")
 # associacao_disciplinas_alunos(alunos, disciplina)
 
+
 def continuar():
-    #while True:
-    try:
-        continuar = input("Deseja continuar? [S/N] ").strip().upper()[0]
-        if continuar not in "NS":
+    resposta = None
+    while resposta == None:
+        try:
+            continuar = input("Deseja continuar? [S/N] ").strip().upper()[0]
+            if continuar not in "NS":
+                print("Resposta inválida. Responda S para continuar ou N para parar.")
+                resposta = None
+            if continuar == "N":
+                resposta = False
+            if continuar == "S":
+                resposta = True
+        except (ValueError, TypeError, IndexError, KeyboardInterrupt):
             print("Resposta inválida. Responda S para continuar ou N para parar.")
-    except (ValueError, TypeError):
-        print("Resposta inválida. Responda S para continuar ou N para parar.")
-    except IndexError:
-        print("Resposta inválida. Responda S para continuar ou N para parar.")
-    except KeyboardInterrupt:
-        print("Resposta inválida. Responda S para continuar ou N para parar.")
-    except UnboundLocalError:
-        print("Resposta inválida. Responda S para continuar ou N para parar.")
-
-        if continuar == "N":
-            return False
-        elif continuar == "S":
-            return True
-        # if not continuar:
-        #     bre
+            resposta = None
+    return resposta
 
 
-continuar()
-
-
-while continuar():
-    print("Oi")
-    if not continuar():
+while True:
+    decisao = continuar()
+    if not decisao:
         break
+    if decisao:
+        print("continuar")
+
+
+# continuar()
+
+
+# while continuar() == True:
+#     print("Oi")
+#     if not continuar():
+#         break
