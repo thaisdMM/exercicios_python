@@ -3,21 +3,20 @@ from library.files import project_file
 from library.interface import project_interfaces
 import json
 
+
 ## fazer uma função para coletar dados de alunos em um arquivo
 def coleta_dados_alunos(file_path):
     file_path = "cadastro_alunos_matricula.json"
     if not project_file.verificar_arquivo_existe(file_path):
-        new_file = project_file.criar_subscrever_arquivo(file_path)
-    
-    #if project_file.verificar_arquivo_existe(file_path) or new_file:
-        dados_aluno = project_file.ler_arquivo(file_path)
-        return dados_aluno
-    
+        project_file.criar_subscrever_arquivo(file_path)
+    dados_aluno = project_file.ler_arquivo(file_path)
+    return dados_aluno
+
 
 ## fazer outra funçao para apenas cadastrar alunos - chama a coleta, depois cadastra os demais no looping
 def cadastro_alunos(nome_aluno, matricula_aluno, file_path):
     file_path = "cadastro_alunos_matricula.json"
-    
+
     if not project_file.verificar_arquivo_existe(file_path):
         project_file.criar_arquivo(file_path)
     else:
@@ -33,10 +32,8 @@ def cadastro_alunos(nome_aluno, matricula_aluno, file_path):
     aluno = {"nome": nome_aluno, "matricula": matricula_aluno, "disciplina": []}
     lista_alunos.append(aluno.copy())
 
-
     # quando o loopoing finalizar - salvar os dados no arquivo:
-    project_file.subscrever_arquivo(file_path, lista_alunos
-    )
+    project_file.subscrever_arquivo(file_path, lista_alunos)
     return aluno
     # associacao_disciplinas_alunos(lista_alunos, lista_disciplinas)
     # print(
