@@ -8,16 +8,6 @@ import json
 lista_alunos = []
 
 
-# # Caminho absoluto da pasta
-# PASTA_BASE = os.path.dirname(os.path.abspath(__file__))
-
-# # # Caminho absoluto até o arquivo
-# CAMINHO_ARQUIVO = os.path.join(
-#     PASTA_BASE, "files_created/cadastro_alunos_matricula.json"
-# )
-
-
-# arquivo = CAMINHO_ARQUIVO
 
 
 while True:
@@ -37,32 +27,34 @@ while True:
     )
     # queria ver se é possivel usar o tamanho da lista depois para definir o fim da resposta
     if resposta == 1:
-        project_interfaces.titulo(f"{resposta}- Cadastrar alunos.")
-        file_path = "cadastro_alunos_matricula.json"
+        arquivo = "cadastro_alunos_matricula.json"
+        print(students_functions.coleta_dados_alunos(arquivo))
+        # project_interfaces.titulo(f"{resposta}- Cadastrar alunos.")
+        # file_path = "cadastro_alunos_matricula.json"
 
-        if not project_file.verificar_arquivo_existe(file_path):
-            project_file.criar_arquivo(file_path)
+        # if not project_file.verificar_arquivo_existe(file_path):
+        #     project_file.criar_arquivo(file_path)
 
-        nome_aluno = input("Nome do aluno: ").strip().title()
-        while True:
-            matricula_aluno = project_interfaces.leiaInt(
-                f"Matrícula do aluno {nome_aluno}: "
-            )
-            if any(
-                matricula_existente["matricula"] == matricula_aluno
-                for matricula_existente in lista_alunos
-            ):
-                print(
-                    f"Matrícula {matricula_aluno} já cadastrada em outro aluno. Por favor, digite outro número de matrícula."
-                )
-                print(project_interfaces.linha())
-            else:
-                break
-        print(project_interfaces.linha())
-        aluno = students_functions.cadastro_alunos(nome_aluno, matricula_aluno)
-        project_file.append_arquivo(file_path, aluno)
-        print(f"Aluno cadastrado com sucesso")
-        # dados = students_functions.cadastro_alunos(nome_aluno, matricula_aluno)
+        # nome_aluno = input("Nome do aluno: ").strip().title()
+        # while True:
+        #     matricula_aluno = project_interfaces.leiaInt(
+        #         f"Matrícula do aluno {nome_aluno}: "
+        #     )
+        #     if any(
+        #         matricula_existente["matricula"] == matricula_aluno
+        #         for matricula_existente in lista_alunos
+        #     ):
+        #         print(
+        #             f"Matrícula {matricula_aluno} já cadastrada em outro aluno. Por favor, digite outro número de matrícula."
+        #         )
+        #         print(project_interfaces.linha())
+        #     else:
+        #         break
+        # print(project_interfaces.linha())
+        # aluno = students_functions.cadastro_alunos(nome_aluno, matricula_aluno)
+        # project_file.append_arquivo(file_path, aluno)
+        # print(f"Aluno cadastrado com sucesso")
+        # # dados = students_functions.cadastro_alunos(nome_aluno, matricula_aluno)
         # project_file.subscrever_arquivo(file_path, dados)
         # print(f"Arquivo de alunos criado com sucesso em {file_path}")
 
