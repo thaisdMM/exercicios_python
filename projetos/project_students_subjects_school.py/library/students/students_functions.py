@@ -4,24 +4,24 @@ from library.interface import project_interfaces
 import json
 
 ## fazer uma função para coletar dados de alunos em um arquivo
-def coleta_dados_alunos(arquivo):
-    arquivo = "cadastro_alunos_matricula.json"
-    if not project_file.verificar_arquivo_existe(arquivo):
-        project_file.criar_subscrever_arquivo(arquivo)
-        return arquivo
-    else:
-        dados_aluno = project_file.ler_arquivo(arquivo)
+def coleta_dados_alunos(file_path):
+    file_path = "cadastro_alunos_matricula.json"
+    if not project_file.verificar_arquivo_existe(file_path):
+        new_file = project_file.criar_subscrever_arquivo(file_path)
+    
+    #if project_file.verificar_arquivo_existe(file_path) or new_file:
+        dados_aluno = project_file.ler_arquivo(file_path)
         return dados_aluno
-
+    
 
 ## fazer outra funçao para apenas cadastrar alunos - chama a coleta, depois cadastra os demais no looping
-def cadastro_alunos(nome_aluno, matricula_aluno, arquivo):
-    arquivo = "cadastro_alunos_matricula.json"
+def cadastro_alunos(nome_aluno, matricula_aluno, file_path):
+    file_path = "cadastro_alunos_matricula.json"
     
-    if not project_file.verificar_arquivo_existe(arquivo):
-        project_file.criar_arquivo(arquivo)
+    if not project_file.verificar_arquivo_existe(file_path):
+        project_file.criar_arquivo(file_path)
     else:
-        dados_aluno = project_file.ler_arquivo(arquivo)
+        dados_aluno = project_file.ler_arquivo(file_path)
     # looping de cadastro
     project_interfaces.continuar()
     lista_alunos = []
@@ -35,7 +35,7 @@ def cadastro_alunos(nome_aluno, matricula_aluno, arquivo):
 
 
     # quando o loopoing finalizar - salvar os dados no arquivo:
-    project_file.subscrever_arquivo(arquivo, lista_alunos
+    project_file.subscrever_arquivo(file_path, lista_alunos
     )
     return aluno
     # associacao_disciplinas_alunos(lista_alunos, lista_disciplinas)
