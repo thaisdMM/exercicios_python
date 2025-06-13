@@ -2,6 +2,18 @@ import os
 import json
 
 
+# Caminho absoluto da pasta
+PASTA_BASE = os.path.dirname(os.path.abspath(__file__))
+
+# # Caminho absoluto até o arquivo
+CAMINHO_ARQUIVO = os.path.join(
+    PASTA_BASE, file_path
+)
+
+file_path = CAMINHO_ARQUIVO
+
+
+
 def verificar_arquivo_existe(file_path):
     return os.path.exists(file_path)  # retorna True or False
 
