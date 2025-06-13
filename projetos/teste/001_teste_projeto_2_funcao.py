@@ -61,12 +61,3 @@ while True:
         break
     if decisao:
         print("continuar")
-
-
-# continuar()
-
-
-# while continuar() == True:
-#     print("Oi")
-#     if not continuar():
-#         break
