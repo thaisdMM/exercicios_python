@@ -3,11 +3,7 @@ import json
 
 
 def verificar_arquivo_existe(file_path):
-    file = file_path
-    if os.path.exists(file_path):
-        return file
-    else:
-        return None
+    return os.path.exists(file_path)  # retorna True or False
 
 
 # def criar_arquivo(file_path):
@@ -29,18 +25,21 @@ def criar_subscrever_arquivo(file_paht, data=None):
             json.dump(data, file, indent=4)
             return True
     except FileNotFoundError:
-        return "Arquivo não encontrado"
+        print("Arquivo não encontrado")
+        return False
     except PermissionError:
-        return "Você não tem permissão para criar esse arquivo."
+        print("Você não tem permissão para criar esse arquivo.")
+        return False
 
 
 def append_arquivo(file_path, data):
     try:
         with open(file_path, "a") as append_file:
             json.dump(data, append_file, indent=4)
-            return append_file
+            return True
     except PermissionError:
-        return "Você não tem permissão para criar esse arquivo."
+        print("Você não tem permissão para criar esse arquivo.")
+        return False
 
 
 def ler_arquivo(file_path):
@@ -49,9 +48,11 @@ def ler_arquivo(file_path):
             content = json.load(read_file)
             return content
     except FileNotFoundError:
-        return "Arquivo não encontrado"
+        print("Arquivo não encontrado")
+        return None
     except PermissionError:
-        return "Você não tem permissão para criar esse arquivo."
+        print("Você não tem permissão para criar esse arquivo.")
+        return None
 
 
 # def verificar_arquivo_existe(file_path):
