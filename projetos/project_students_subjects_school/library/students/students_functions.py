@@ -1,12 +1,16 @@
 from library.subjects import subjects_functions
 from library.files import project_file
 from library.interface import project_interfaces
+from library.files import path
 import json
+import os
 
 
 ## fazer uma função para coletar dados de alunos em um arquivo
-def coleta_dados_alunos(file_path):
-    file_path = "cadastro_alunos_matricula.json"
+def coleta_dados_alunos():
+    file_name = "files_created/cadastro_alunos.json"
+    file_path = path.absolute_path(file_name)
+
     if not project_file.verificar_arquivo_existe(file_path):
         project_file.criar_subscrever_arquivo(file_path)
     dados_aluno = project_file.ler_arquivo(file_path)
