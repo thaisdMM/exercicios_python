@@ -5,6 +5,9 @@ import json
 def verificar_arquivo_existe(file_path):
     return os.path.exists(file_path)  # retorna True or False
 
+def verificar_pasta_existe(folder_path):
+    return os.path.dirname(folder_path)
+
 
 # def criar_arquivo(file_path):
 #     data = []
